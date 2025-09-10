@@ -1,251 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Trending Cars Dashboard</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Traffic Challan Payment Dashboard</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-  :root {
-    --primary: #0d1b2a;
-    --secondary: #1b263b;
-    --accent: #e94560;
-    --text-light: #f0f0f0;
-    --text-dark: #c9d1d9;
-    --bg-gradient: linear-gradient(135deg, #1b263b, #415a77);
-    --card-bg: rgba(255, 255, 255, 0.08);
-    --shadow: rgba(0, 0, 0, 0.25);
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0; padding: 0;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  body {
-    background: var(--bg-gradient);
-    color: var(--text-light);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header {
-    background-color: var(--primary);
-    padding: 2rem 3rem;
-    text-align: center;
-    box-shadow: 0 4px 12px var(--shadow);
-  }
-
-  header h1 {
-    font-weight: 600;
-    font-size: 2.8rem;
-    color: var(--accent);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  main {
-    flex-grow: 1;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-  }
-
-  .car-card {
-    background: var(--card-bg);
-    border-radius: 18px;
-    box-shadow: 0 12px 25px var(--shadow);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease;
-  }
-
-  .car-card:hover {
-    transform: translateY(-10px);
-  }
-
-  .car-image {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-
-  .car-card:hover .car-image {
-    transform: scale(1.05);
-  }
-
-  .car-content {
-    padding: 1.8rem 2rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .car-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-    color: var(--accent);
-    letter-spacing: 1px;
-  }
-
-  .car-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-dark);
-    margin-bottom: 1.2rem;
-    font-weight: 500;
-  }
-
-  .car-description {
-    font-size: 1rem;
-    line-height: 1.5;
-    flex-grow: 1;
-    color: var(--text-light);
-    margin-bottom: 1.8rem;
-  }
-
-  .car-specs {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    font-size: 0.95rem;
-  }
-
-  .spec-item {
-    background: rgba(255,255,255,0.12);
-    padding: 0.7rem 1rem;
-    border-radius: 12px;
-    flex-grow: 1;
-    text-align: center;
-    transition: background-color 0.3s ease;
-  }
-
-  .spec-item:hover {
-    background-color: var(--accent);
-    color: var(--text-light);
-  }
-
-  footer {
-    text-align: center;
-    padding: 1.5rem;
-    background-color: var(--primary);
-    color: var(--text-dark);
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-  }
-
-  @media(max-width: 600px) {
-    header h1 {
-      font-size: 2rem;
+    :root {
+      --primary: #2c3e50;
+      --secondary: #2980b9;
+      --accent: #e67e22;
+      --success: #27ae60;
+      --danger: #c0392b;
+      --background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      --white: #ffffff;
+      --gray-light: #ecf0f1;
+      --shadow: rgba(0, 0, 0, 0.15);
     }
-  }
-</style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--background);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      color: var(--primary);
+    }
+
+    header {
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--white);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    main {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 15px 30px var(--shadow);
+      width: 100%;
+      max-width: 720px;
+      padding: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 15px;
+    }
+
+    thead tr {
+      background-color: var(--secondary);
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    thead th {
+      padding: 15px 10px;
+      text-align: left;
+      font-size: 1rem;
+    }
+
+    tbody tr {
+      background: var(--gray-light);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      transition: background-color 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #d6e9ff;
+    }
+
+    tbody td {
+      padding: 15px 10px;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+
+    .amount {
+      font-weight: 700;
+      color: var(--danger);
+    }
+
+    button.pay-btn {
+      background-color: var(--accent);
+      color: var(--white);
+      border: none;
+      padding: 10px 18px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      box-shadow: 0 4px 12px rgba(230, 126, 34, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    button.pay-btn:hover {
+      background-color: #d35400;
+      box-shadow: 0 6px 18px rgba(211, 84, 0, 0.8);
+    }
+
+    button.pay-btn:disabled {
+      background-color: #bdc3c7;
+      cursor: not-allowed;
+      box-shadow: none;
+      color: #7f8c8d;
+    }
+
+    /* Payment success message */
+    #message {
+      margin-top: 1.5rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--success);
+      text-align: center;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      table, thead, tbody, tr, th, td {
+        display: block;
+      }
+
+      thead tr {
+        display: none;
+      }
+
+      tbody tr {
+        margin-bottom: 1rem;
+        background: var(--white);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        padding: 15px;
+      }
+
+      tbody td {
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+        position: relative;
+        padding-left: 50%;
+        font-weight: 500;
+      }
+
+      tbody td:last-child {
+        border-bottom: none;
+      }
+
+      tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: 700;
+        color: var(--secondary);
+        top: 12px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
 <header>
-  <h1>Trending Cars of 2025</h1>
+  <h1>Traffic Challan Payment Dashboard</h1>
 </header>
 
-<main id="carGrid">
-  <!-- JS will insert car cards here -->
+<main>
+  <table>
+    <thead>
+      <tr>
+        <th>Vehicle No.</th>
+        <th>Owner Name</th>
+        <th>Challan Amount</th>
+        <th>Pay</th>
+      </tr>
+    </thead>
+    <tbody id="challanTableBody">
+      <!-- rows inserted here by JS -->
+    </tbody>
+  </table>
+
+  <div id="message">Payment Successful! Thank you.</div>
 </main>
 
-<footer>
-  &copy; 2025 Passionate Cars Showcase
-</footer>
-
 <script>
-  const cars = [
-    {
-      name: "Tesla Model S Plaid",
-      subtitle: "Electric Performance Sedan",
-      description: "A cutting-edge electric sedan that combines insane acceleration with futuristic tech, boasting a range of over 390 miles and a 0-60 in under 2 seconds.",
-      image: "https://cdn.motor1.com/images/mgl/0ANg2/s1/2022-tesla-model-s-plaid.webp",
-      specs: {
-        "Top Speed": "200 mph",
-        "Range": "390 miles",
-        "0-60 mph": "1.99 sec"
-      }
-    },
-    {
-      name: "Ford Mustang Mach-E",
-      subtitle: "Electric Muscle SUV",
-      description: "Ford’s all-electric Mach-E combines the classic Mustang spirit with a modern electric SUV design, offering up to 300 miles of range and sporty handling.",
-      image: "https://cdn.motor1.com/images/mgl/Q6Zw6/s1/ford-mustang-mach-e.webp",
-      specs: {
-        "Top Speed": "111 mph",
-        "Range": "300 miles",
-        "0-60 mph": "3.5 sec"
-      }
-    },
-    {
-      name: "Porsche Taycan Turbo S",
-      subtitle: "Electric Luxury Sports Car",
-      description: "The Taycan Turbo S delivers Porsche's legendary performance in an all-electric package, with lightning-fast acceleration and sublime handling.",
-      image: "https://cdn.motor1.com/images/mgl/RyRpW/s1/2020-porsche-taycan-turbo.webp",
-      specs: {
-        "Top Speed": "161 mph",
-        "Range": "230 miles",
-        "0-60 mph": "2.6 sec"
-      }
-    },
-    {
-      name: "BMW iX M60",
-      subtitle: "Electric Luxury SUV",
-      description: "BMW's flagship electric SUV offers a perfect blend of luxury, power, and cutting-edge tech, powered by dual motors with a sporty edge.",
-      image: "https://cdn.motor1.com/images/mgl/0NjOm/s1/2022-bmw-ix.webp",
-      specs: {
-        "Top Speed": "155 mph",
-        "Range": "305 miles",
-        "0-60 mph": "3.6 sec"
-      }
-    },
-    {
-      name: "Audi RS e-tron GT",
-      subtitle: "Electric Grand Tourer",
-      description: "A sleek grand touring electric car with Quattro all-wheel drive, the RS e-tron GT blends luxury and blistering performance in stunning design.",
-      image: "https://cdn.motor1.com/images/mgl/jq9Lz/s1/2022-audi-rs-e-tron-gt.webp",
-      specs: {
-        "Top Speed": "155 mph",
-        "Range": "238 miles",
-        "0-60 mph": "3.1 sec"
-      }
-    }
+  // Sample data
+  const challans = [
+    { vehicleNo: "KA-01-HH-1234", owner: "Rajesh Kumar", amount: 1500 },
+    { vehicleNo: "MH-12-AB-4567", owner: "Sneha Patel", amount: 500 },
+    { vehicleNo: "DL-04-XY-9876", owner: "Amit Singh", amount: 1200 },
+    { vehicleNo: "TN-09-ZZ-5555", owner: "Priya Sharma", amount: 800 },
+    { vehicleNo: "GJ-05-JJ-1122", owner: "Ravi Desai", amount: 650 }
   ];
 
-  const carGrid = document.getElementById('carGrid');
+  const tbody = document.getElementById('challanTableBody');
+  const messageDiv = document.getElementById('message');
 
-  cars.forEach(car => {
-    const card = document.createElement('article');
-    card.className = 'car-card';
+  function renderTable() {
+    tbody.innerHTML = '';
+    challans.forEach((challan, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td data-label="Vehicle No.">${challan.vehicleNo}</td>
+        <td data-label="Owner Name">${challan.owner}</td>
+        <td data-label="Challan Amount" class="amount">₹${challan.amount}</td>
+        <td data-label="Pay">
+          <button class="pay-btn" onclick="payChallan(${index}, this)">Pay Now</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
 
-    card.innerHTML = `
-      <img class="car-image" src="${car.image}" alt="${car.name}" loading="lazy" />
-      <div class="car-content">
-        <h2 class="car-title">${car.name}</h2>
-        <h3 class="car-subtitle">${car.subtitle}</h3>
-        <p class="car-description">${car.description}</p>
-        <div class="car-specs">
-          ${Object.entries(car.specs).map(([key, value]) => `
-            <div class="spec-item" title="${key}">${key}: <strong>${value}</strong></div>
-          `).join('')}
-        </div>
-      </div>
-    `;
+  function payChallan(index, btn) {
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+    messageDiv.style.display = 'none';
 
-    carGrid.appendChild(card);
-  });
+    // Simulate payment delay
+    setTimeout(() => {
+      challans.splice(index, 1); // remove paid challan
+      renderTable();
+      messageDiv.style.display = 'block';
+      messageDiv.textContent = "Payment Successful! Thank you.";
+    }, 1500);
+  }
+
+  renderTable();
 </script>
 
 </body>
