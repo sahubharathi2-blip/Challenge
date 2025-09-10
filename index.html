@@ -8,14 +8,14 @@
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
     :root {
-      --primary: #2c3e50;
-      --secondary: #2980b9;
-      --accent: #e67e22;
-      --success: #27ae60;
-      --danger: #c0392b;
-      --background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      --primary: #1f2937; /* Dark Slate */
+      --secondary: #3b82f6; /* Blue */
+      --accent: #f97316; /* Orange */
+      --success: #22c55e; /* Green */
+      --danger: #ef4444; /* Red */
+      --background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
       --white: #ffffff;
-      --gray-light: #ecf0f1;
+      --gray-light: #f3f4f6;
       --shadow: rgba(0, 0, 0, 0.15);
     }
 
@@ -31,15 +31,15 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
-      color: var(--primary);
+      padding: 2rem 1rem 4rem;
+      color: var(--white);
     }
 
     header {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       text-align: center;
       color: var(--white);
-      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
     }
 
     header h1 {
@@ -55,6 +55,23 @@
       width: 100%;
       max-width: 720px;
       padding: 2rem;
+      color: var(--primary);
+    }
+
+    #searchBar {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 1rem;
+      border-radius: 12px;
+      border: 2px solid var(--secondary);
+      margin-bottom: 1.8rem;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+
+    #searchBar:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
     }
 
     table {
@@ -83,7 +100,7 @@
     }
 
     tbody tr:hover {
-      background-color: #d6e9ff;
+      background-color: #dbeafe;
     }
 
     tbody td {
@@ -106,22 +123,22 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.25s ease;
-      box-shadow: 0 4px 12px rgba(230, 126, 34, 0.6);
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.6);
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
     button.pay-btn:hover {
-      background-color: #d35400;
-      box-shadow: 0 6px 18px rgba(211, 84, 0, 0.8);
+      background-color: #c2410c;
+      box-shadow: 0 6px 18px rgba(194, 65, 12, 0.8);
     }
 
     button.pay-btn:disabled {
-      background-color: #bdc3c7;
+      background-color: #d1d5db;
       cursor: not-allowed;
       box-shadow: none;
-      color: #7f8c8d;
+      color: #6b7280;
     }
 
     /* Payment success message */
@@ -182,6 +199,13 @@
 </header>
 
 <main>
+  <input
+    type="text"
+    id="searchBar"
+    placeholder="Search by Vehicle No. or Owner Name..."
+    aria-label="Search Challans"
+  />
+
   <table>
     <thead>
       <tr>
@@ -211,17 +235,35 @@
 
   const tbody = document.getElementById('challanTableBody');
   const messageDiv = document.getElementById('message');
+  const searchBar = document.getElementById('searchBar');
 
-  function renderTable() {
+  // Render table with optional filter
+  function renderTable(filter = '') {
+    const filterLower = filter.toLowerCase();
     tbody.innerHTML = '';
-    challans.forEach((challan, index) => {
+
+    const filteredChallans = challans.filter(c => 
+      c.vehicleNo.toLowerCase().includes(filterLower) ||
+      c.owner.toLowerCase().includes(filterLower)
+    );
+
+    if (filteredChallans.length === 0) {
+      tbody.innerHTML = `
+        <tr><td colspan="4" style="text-align:center; padding: 20px; font-style: italic; color: #999;">
+          No matching challans found.
+        </td></tr>
+      `;
+      return;
+    }
+
+    filteredChallans.forEach((challan, index) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td data-label="Vehicle No.">${challan.vehicleNo}</td>
         <td data-label="Owner Name">${challan.owner}</td>
         <td data-label="Challan Amount" class="amount">₹${challan.amount}</td>
         <td data-label="Pay">
-          <button class="pay-btn" onclick="payChallan(${index}, this)">Pay Now</button>
+          <button class="pay-btn" onclick="payChallan(${challans.indexOf(challan)}, this)">Pay Now</button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -236,11 +278,16 @@
     // Simulate payment delay
     setTimeout(() => {
       challans.splice(index, 1); // remove paid challan
-      renderTable();
+      renderTable(searchBar.value);
       messageDiv.style.display = 'block';
       messageDiv.textContent = "Payment Successful! Thank you.";
     }, 1500);
   }
+
+  searchBar.addEventListener('input', (e) => {
+    renderTable(e.target.value);
+    messageDiv.style.display = 'none';
+  });
 
   renderTable();
 </script>
