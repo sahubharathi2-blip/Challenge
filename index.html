@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Traffic Challan Payment Dashboard</title>
+  <title>Traffic Challan Dashboard</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-+e3xxN1BnhgF+iwTfDK7lLB1GzU19FtTYB3zF+f68Lz0HckZC1QkK+uz4djEFd+n8T6VNhIjx4FeuUjjIdIoZw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
     :root {
-      --primary: #1f2937; /* Dark Slate */
-      --secondary: #3b82f6; /* Blue */
-      --accent: #f97316; /* Orange */
-      --success: #22c55e; /* Green */
-      --danger: #ef4444; /* Red */
+      --primary: #1f2937;
+      --secondary: #3b82f6;
+      --accent: #f97316;
+      --success: #22c55e;
+      --danger: #ef4444;
       --background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
       --white: #ffffff;
       --gray-light: #f3f4f6;
@@ -28,34 +32,71 @@
     body {
       min-height: 100vh;
       background: var(--background);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem 4rem;
       color: var(--white);
+      padding-top: 80px;
+    }
+
+    /* NAV BAR */
+    nav {
+      background-color: #111827;
+      padding: 1rem 2rem;
+      color: var(--white);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    nav .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--secondary);
+    }
+
+    nav .menu {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav .menu a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav .menu a:hover {
+      color: var(--accent);
     }
 
     header {
-      margin-bottom: 1.5rem;
       text-align: center;
-      color: var(--white);
-      text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+      margin-bottom: 1rem;
     }
 
     header h1 {
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      margin-top: 1rem;
     }
 
     main {
+      max-width: 900px;
+      margin: 0 auto;
       background: var(--white);
       border-radius: 16px;
       box-shadow: 0 15px 30px var(--shadow);
-      width: 100%;
-      max-width: 720px;
       padding: 2rem;
       color: var(--primary);
+      overflow-x: auto;
     }
 
     #searchBar {
@@ -66,30 +107,24 @@
       border: 2px solid var(--secondary);
       margin-bottom: 1.8rem;
       outline-offset: 2px;
-      transition: border-color 0.3s ease;
-    }
-
-    #searchBar:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
     }
 
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0 15px;
+      min-width: 800px;
     }
 
     thead tr {
       background-color: var(--secondary);
       color: var(--white);
-      font-weight: 700;
     }
 
     thead th {
       padding: 15px 10px;
       text-align: left;
-      font-size: 1rem;
+      white-space: nowrap;
     }
 
     tbody tr {
@@ -105,8 +140,9 @@
 
     tbody td {
       padding: 15px 10px;
-      font-weight: 500;
       vertical-align: middle;
+      font-weight: 500;
+      white-space: nowrap;
     }
 
     .amount {
@@ -114,7 +150,7 @@
       color: var(--danger);
     }
 
-    button.pay-btn {
+    .pay-btn {
       background-color: var(--accent);
       color: var(--white);
       border: none;
@@ -127,21 +163,19 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
     }
 
-    button.pay-btn:hover {
+    .pay-btn:hover {
       background-color: #c2410c;
-      box-shadow: 0 6px 18px rgba(194, 65, 12, 0.8);
     }
 
-    button.pay-btn:disabled {
+    .pay-btn:disabled {
       background-color: #d1d5db;
-      cursor: not-allowed;
-      box-shadow: none;
       color: #6b7280;
+      cursor: not-allowed;
     }
 
-    /* Payment success message */
     #message {
       margin-top: 1.5rem;
       font-weight: 600;
@@ -151,119 +185,218 @@
       display: none;
     }
 
-    @media (max-width: 480px) {
+    /* Icons for challan types */
+    .challan-speeding { color: #ef4444; }       /* Red */
+    .challan-parking { color: #f59e0b; }        /* Amber */
+    .challan-signal { color: #3b82f6; }         /* Blue */
+    .challan-document { color: #10b981; }       /* Green */
+
+    @media (max-width: 850px) {
+      main {
+        padding: 1rem;
+      }
+      table {
+        min-width: 700px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav .menu {
+        display: none;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      main {
+        margin: 1rem;
+      }
+
       table, thead, tbody, tr, th, td {
         display: block;
       }
 
-      thead tr {
+      thead {
         display: none;
       }
 
       tbody tr {
         margin-bottom: 1rem;
-        background: var(--white);
-        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-        border-radius: 12px;
-        padding: 15px;
+        padding: 1rem;
       }
 
       tbody td {
-        padding: 10px 0;
-        border-bottom: 1px solid #ddd;
-        position: relative;
         padding-left: 50%;
-        font-weight: 500;
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        white-space: normal;
+      }
+
+      tbody td::before {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-weight: 700;
+        color: var(--secondary);
+        content: attr(data-label);
+        white-space: nowrap;
       }
 
       tbody td:last-child {
         border-bottom: none;
-      }
-
-      tbody td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 15px;
-        font-weight: 700;
-        color: var(--secondary);
-        top: 12px;
-        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
 
+<!-- Navbar -->
+<nav>
+  <div class="logo">
+    <i class="fas fa-car-crash"></i> TrafficChallan
+  </div>
+  <div class="menu">
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-car"></i> Vehicles</a>
+    <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
+    <a href="#"><i class="fas fa-info-circle"></i> Help</a>
+  </div>
+</nav>
+
+<!-- Page header -->
 <header>
-  <h1>Traffic Challan Payment Dashboard</h1>
+  <h1><i class="fas fa-money-check-alt"></i> Pay Your Challans</h1>
 </header>
 
+<!-- Main content -->
 <main>
   <input
     type="text"
     id="searchBar"
-    placeholder="Search by Vehicle No. or Owner Name..."
+    placeholder="Search by Vehicle No., Owner Name or Challan Type..."
     aria-label="Search Challans"
   />
 
   <table>
     <thead>
       <tr>
-        <th>Vehicle No.</th>
-        <th>Owner Name</th>
-        <th>Challan Amount</th>
-        <th>Pay</th>
+        <th><i class="fas fa-car"></i> Vehicle No.</th>
+        <th><i class="fas fa-user"></i> Owner Name</th>
+        <th><i class="fas fa-info-circle"></i> Vehicle Details</th>
+        <th><i class="fas fa-exclamation-triangle"></i> Challan Type</th>
+        <th><i class="fas fa-indian-rupee-sign"></i> Amount</th>
+        <th><i class="fas fa-wallet"></i> Pay</th>
       </tr>
     </thead>
     <tbody id="challanTableBody">
-      <!-- rows inserted here by JS -->
+      <!-- Rows rendered by JS -->
     </tbody>
   </table>
 
-  <div id="message">Payment Successful! Thank you.</div>
+  <div id="message">
+    <i class="fas fa-check-circle"></i> Payment Successful! Thank you.
+  </div>
 </main>
 
+<!-- JavaScript -->
 <script>
-  // Sample data
+  // Challan types with icons & titles
+  const challanTypes = {
+    speeding: {
+      icon: '<i class="fas fa-tachometer-alt challan-speeding" title="Speeding"></i>',
+      label: 'Speeding'
+    },
+    parking: {
+      icon: '<i class="fas fa-parking challan-parking" title="Illegal Parking"></i>',
+      label: 'Illegal Parking'
+    },
+    signal: {
+      icon: '<i class="fas fa-traffic-light challan-signal" title="Signal Violation"></i>',
+      label: 'Signal Violation'
+    },
+    document: {
+      icon: '<i class="fas fa-file-contract challan-document" title="Document Violation"></i>',
+      label: 'Document Violation'
+    }
+  };
+
+  // Sample data with vehicle details and challan types
   const challans = [
-    { vehicleNo: "KA-01-HH-1234", owner: "Rajesh Kumar", amount: 1500 },
-    { vehicleNo: "MH-12-AB-4567", owner: "Sneha Patel", amount: 500 },
-    { vehicleNo: "DL-04-XY-9876", owner: "Amit Singh", amount: 1200 },
-    { vehicleNo: "TN-09-ZZ-5555", owner: "Priya Sharma", amount: 800 },
-    { vehicleNo: "GJ-05-JJ-1122", owner: "Ravi Desai", amount: 650 }
+    { 
+      vehicleNo: "KA-01-HH-1234", 
+      owner: "Rajesh Kumar", 
+      vehicleDetails: "Car, 2018 Model", 
+      challanType: "speeding",
+      amount: 1500 
+    },
+    { 
+      vehicleNo: "MH-12-AB-4567", 
+      owner: "Sneha Patel", 
+      vehicleDetails: "Motorcycle, 2020 Model", 
+      challanType: "parking",
+      amount: 500 
+    },
+    { 
+      vehicleNo: "DL-04-XY-9876", 
+      owner: "Amit Singh", 
+      vehicleDetails: "Truck, 2015 Model", 
+      challanType: "signal",
+      amount: 1200 
+    },
+    { 
+      vehicleNo: "TN-09-ZZ-5555", 
+      owner: "Priya Sharma", 
+      vehicleDetails: "Car, 2019 Model", 
+      challanType: "document",
+      amount: 800 
+    },
+    { 
+      vehicleNo: "GJ-05-JJ-1122", 
+      owner: "Ravi Desai", 
+      vehicleDetails: "Bus, 2010 Model", 
+      challanType: "speeding",
+      amount: 650 
+    }
   ];
 
   const tbody = document.getElementById('challanTableBody');
   const messageDiv = document.getElementById('message');
   const searchBar = document.getElementById('searchBar');
 
-  // Render table with optional filter
+  // Render table rows with optional filter
   function renderTable(filter = '') {
     const filterLower = filter.toLowerCase();
     tbody.innerHTML = '';
 
-    const filteredChallans = challans.filter(c => 
+    const filtered = challans.filter(c => 
       c.vehicleNo.toLowerCase().includes(filterLower) ||
-      c.owner.toLowerCase().includes(filterLower)
+      c.owner.toLowerCase().includes(filterLower) ||
+      challanTypes[c.challanType].label.toLowerCase().includes(filterLower)
     );
 
-    if (filteredChallans.length === 0) {
+    if (filtered.length === 0) {
       tbody.innerHTML = `
-        <tr><td colspan="4" style="text-align:center; padding: 20px; font-style: italic; color: #999;">
+        <tr><td colspan="6" style="text-align:center; padding: 20px; font-style: italic; color: #999;">
           No matching challans found.
         </td></tr>
       `;
       return;
     }
 
-    filteredChallans.forEach((challan, index) => {
+    filtered.forEach((c, index) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td data-label="Vehicle No.">${challan.vehicleNo}</td>
-        <td data-label="Owner Name">${challan.owner}</td>
-        <td data-label="Challan Amount" class="amount">₹${challan.amount}</td>
+        <td data-label="Vehicle No."><i class="fas fa-car"></i> ${c.vehicleNo}</td>
+        <td data-label="Owner Name"><i class="fas fa-user"></i> ${c.owner}</td>
+        <td data-label="Vehicle Details"><i class="fas fa-info-circle"></i> ${c.vehicleDetails}</td>
+        <td data-label="Challan Type">${challanTypes[c.challanType].icon} ${challanTypes[c.challanType].label}</td>
+        <td data-label="Amount" class="amount">₹${c.amount}</td>
         <td data-label="Pay">
-          <button class="pay-btn" onclick="payChallan(${challans.indexOf(challan)}, this)">Pay Now</button>
+          <button class="pay-btn" onclick="payChallan(${challans.indexOf(c)}, this)">
+            <i class="fas fa-credit-card"></i> Pay Now
+          </button>
         </td>
       `;
       tbody.appendChild(tr);
@@ -272,23 +405,26 @@
 
   function payChallan(index, btn) {
     btn.disabled = true;
-    btn.textContent = "Processing...";
-    messageDiv.style.display = 'none';
+    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
 
     // Simulate payment delay
     setTimeout(() => {
-      challans.splice(index, 1); // remove paid challan
+      // Remove the challan after payment
+      challans.splice(index, 1);
       renderTable(searchBar.value);
       messageDiv.style.display = 'block';
-      messageDiv.textContent = "Payment Successful! Thank you.";
-    }, 1500);
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 3500);
+    }, 2000);
   }
 
-  searchBar.addEventListener('input', (e) => {
-    renderTable(e.target.value);
-    messageDiv.style.display = 'none';
+  // Search input event
+  searchBar.addEventListener('input', () => {
+    renderTable(searchBar.value);
   });
 
+  // Initial render
   renderTable();
 </script>
 
