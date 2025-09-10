@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trending Cars Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  :root {
+    --primary: #0d1b2a;
+    --secondary: #1b263b;
+    --accent: #e94560;
+    --text-light: #f0f0f0;
+    --text-dark: #c9d1d9;
+    --bg-gradient: linear-gradient(135deg, #1b263b, #415a77);
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --shadow: rgba(0, 0, 0, 0.25);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    background: var(--bg-gradient);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background-color: var(--primary);
+    padding: 2rem 3rem;
+    text-align: center;
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+
+  header h1 {
+    font-weight: 600;
+    font-size: 2.8rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  main {
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .car-card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    box-shadow: 0 12px 25px var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+
+  .car-card:hover {
+    transform: translateY(-10px);
+  }
+
+  .car-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .car-card:hover .car-image {
+    transform: scale(1.05);
+  }
+
+  .car-content {
+    padding: 1.8rem 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .car-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .car-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 1.2rem;
+    font-weight: 500;
+  }
+
+  .car-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    flex-grow: 1;
+    color: var(--text-light);
+    margin-bottom: 1.8rem;
+  }
+
+  .car-specs {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+  }
+
+  .spec-item {
+    background: rgba(255,255,255,0.12);
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    flex-grow: 1;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+
+  .spec-item:hover {
+    background-color: var(--accent);
+    color: var(--text-light);
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--primary);
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+
+  @media(max-width: 600px) {
+    header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Trending Cars of 2025</h1>
+</header>
+
+<main id="carGrid">
+  <!-- JS will insert car cards here -->
+</main>
+
+<footer>
+  &copy; 2025 Passionate Cars Showcase
+</footer>
+
+<script>
+  const cars = [
+    {
+      name: "Tesla Model S Plaid",
+      subtitle: "Electric Performance Sedan",
+      description: "A cutting-edge electric sedan that combines insane acceleration with futuristic tech, boasting a range of over 390 miles and a 0-60 in under 2 seconds.",
+      image: "https://cdn.motor1.com/images/mgl/0ANg2/s1/2022-tesla-model-s-plaid.webp",
+      specs: {
+        "Top Speed": "200 mph",
+        "Range": "390 miles",
+        "0-60 mph": "1.99 sec"
+      }
+    },
+    {
+      name: "Ford Mustang Mach-E",
+      subtitle: "Electric Muscle SUV",
+      description: "Ford’s all-electric Mach-E combines the classic Mustang spirit with a modern electric SUV design, offering up to 300 miles of range and sporty handling.",
+      image: "https://cdn.motor1.com/images/mgl/Q6Zw6/s1/ford-mustang-mach-e.webp",
+      specs: {
+        "Top Speed": "111 mph",
+        "Range": "300 miles",
+        "0-60 mph": "3.5 sec"
+      }
+    },
+    {
+      name: "Porsche Taycan Turbo S",
+      subtitle: "Electric Luxury Sports Car",
+      description: "The Taycan Turbo S delivers Porsche's legendary performance in an all-electric package, with lightning-fast acceleration and sublime handling.",
+      image: "https://cdn.motor1.com/images/mgl/RyRpW/s1/2020-porsche-taycan-turbo.webp",
+      specs: {
+        "Top Speed": "161 mph",
+        "Range": "230 miles",
+        "0-60 mph": "2.6 sec"
+      }
+    },
+    {
+      name: "BMW iX M60",
+      subtitle: "Electric Luxury SUV",
+      description: "BMW's flagship electric SUV offers a perfect blend of luxury, power, and cutting-edge tech, powered by dual motors with a sporty edge.",
+      image: "https://cdn.motor1.com/images/mgl/0NjOm/s1/2022-bmw-ix.webp",
+      specs: {
+        "Top Speed": "155 mph",
+        "Range": "305 miles",
+        "0-60 mph": "3.6 sec"
+      }
+    },
+    {
+      name: "Audi RS e-tron GT",
+      subtitle: "Electric Grand Tourer",
+      description: "A sleek grand touring electric car with Quattro all-wheel drive, the RS e-tron GT blends luxury and blistering performance in stunning design.",
+      image: "https://cdn.motor1.com/images/mgl/jq9Lz/s1/2022-audi-rs-e-tron-gt.webp",
+      specs: {
+        "Top Speed": "155 mph",
+        "Range": "238 miles",
+        "0-60 mph": "3.1 sec"
+      }
+    }
+  ];
+
+  const carGrid = document.getElementById('carGrid');
+
+  cars.forEach(car => {
+    const card = document.createElement('article');
+    card.className = 'car-card';
+
+    card.innerHTML = `
+      <img class="car-image" src="${car.image}" alt="${car.name}" loading="lazy" />
+      <div class="car-content">
+        <h2 class="car-title">${car.name}</h2>
+        <h3 class="car-subtitle">${car.subtitle}</h3>
+        <p class="car-description">${car.description}</p>
+        <div class="car-specs">
+          ${Object.entries(car.specs).map(([key, value]) => `
+            <div class="spec-item" title="${key}">${key}: <strong>${value}</strong></div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    carGrid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
