@@ -50,6 +50,7 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 10px var(--shadow);
+      font-size: 1rem;
     }
 
     nav .logo {
@@ -61,20 +62,82 @@
       color: var(--secondary);
     }
 
-    nav .menu {
+    nav ul.menu {
       display: flex;
-      gap: 20px;
+      gap: 25px;
+      list-style: none;
     }
 
-    nav .menu a {
+    nav ul.menu > li {
+      position: relative;
+    }
+
+    nav ul.menu > li > a {
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
+      padding: 8px 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
 
-    nav .menu a:hover {
+    nav ul.menu > li > a:hover,
+    nav ul.menu > li:hover > a {
       color: var(--accent);
+    }
+
+    /* Dropdown styling */
+    nav ul.menu li ul.dropdown {
+      display: none;
+      position: absolute;
+      top: 36px;
+      left: 0;
+      background-color: #1f2937;
+      padding: 8px 0;
+      border-radius: 8px;
+      min-width: 180px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 1001;
+    }
+
+    nav ul.menu li:hover ul.dropdown {
+      display: block;
+    }
+
+    nav ul.menu li ul.dropdown li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    nav ul.menu li ul.dropdown li a {
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 400;
+      transition: background-color 0.2s ease;
+    }
+
+    nav ul.menu li ul.dropdown li a:hover {
+      background-color: var(--accent);
+      color: var(--white);
+    }
+
+    /* Caret icon for dropdown */
+    nav ul.menu > li > a .fa-caret-down {
+      font-size: 0.7rem;
+      margin-left: 4px;
+      transition: transform 0.3s ease;
+    }
+
+    nav ul.menu > li:hover > a .fa-caret-down {
+      transform: rotate(180deg);
     }
 
     header {
@@ -201,51 +264,32 @@
     }
 
     @media (max-width: 600px) {
-      nav .menu {
-        display: none;
-      }
-
-      nav {
+      nav ul.menu {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 12px;
+        padding-left: 0;
       }
 
-      main {
-        margin: 1rem;
+      nav ul.menu li ul.dropdown {
+        position: static;
+        box-shadow: none;
+        background-color: transparent;
+        padding: 0;
+        border-radius: 0;
+        display: none !important;
       }
 
-      table, thead, tbody, tr, th, td {
-        display: block;
+      nav ul.menu li:hover ul.dropdown {
+        display: none !important;
       }
 
-      thead {
+      nav ul.menu li ul.dropdown li a {
+        padding-left: 24px;
+        color: var(--white);
+      }
+
+      nav ul.menu li > a .fa-caret-down {
         display: none;
-      }
-
-      tbody tr {
-        margin-bottom: 1rem;
-        padding: 1rem;
-      }
-
-      tbody td {
-        padding-left: 50%;
-        position: relative;
-        border-bottom: 1px solid #ccc;
-        white-space: normal;
-      }
-
-      tbody td::before {
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        font-weight: 700;
-        color: var(--secondary);
-        content: attr(data-label);
-        white-space: nowrap;
-      }
-
-      tbody td:last-child {
-        border-bottom: none;
       }
     }
   </style>
@@ -257,12 +301,43 @@
   <div class="logo">
     <i class="fas fa-car-crash"></i> TrafficChallan
   </div>
-  <div class="menu">
-    <a href="#"><i class="fas fa-home"></i> Home</a>
-    <a href="#"><i class="fas fa-car"></i> Vehicles</a>
-    <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
-    <a href="#"><i class="fas fa-info-circle"></i> Help</a>
-  </div>
+  <ul class="menu">
+    <li>
+      <a href="#"><i class="fas fa-home"></i> Home</a>
+    </li>
+
+    <li>
+      <a href="#">
+        <i class="fas fa-car"></i> Vehicles <i class="fas fa-caret-down"></i>
+      </a>
+      <ul class="dropdown">
+        <li><a href="#"><i class="fas fa-list"></i> All Vehicles</a></li>
+        <li><a href="#"><i class="fas fa-plus-circle"></i> Add Vehicle</a></li>
+        <li><a href="#"><i class="fas fa-history"></i> Vehicle History</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">
+        <i class="fas fa-credit-card"></i> Payments <i class="fas fa-caret-down"></i>
+      </a>
+      <ul class="dropdown">
+        <li><a href="#"><i class="fas fa-exclamation-circle"></i> Pending Challans</a></li>
+        <li><a href="#"><i class="fas fa-receipt"></i> Payment History</a></li>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">
+        <i class="fas fa-info-circle"></i> Help <i class="fas fa-caret-down"></i>
+      </a>
+      <ul class="dropdown">
+        <li><a href="#"><i class="fas fa-question"></i> FAQ</a></li>
+        <li><a href="#"><i class="fas fa-phone"></i> Contact Support</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 
 <!-- Page header -->
@@ -322,7 +397,6 @@
     }
   };
 
-  // Sample data with vehicle details and challan types
   const challans = [
     { 
       vehicleNo: "KA-01-HH-1234", 
