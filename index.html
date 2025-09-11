@@ -7,10 +7,10 @@
 
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
     :root {
       --primary: #1f2937;
       --secondary: #3b82f6;
@@ -22,21 +22,17 @@
       --gray-light: #f3f4f6;
       --shadow: rgba(0, 0, 0, 0.15);
     }
-
     * {
       box-sizing: border-box;
       margin: 0; padding: 0;
       font-family: 'Roboto', sans-serif;
     }
-
     body {
       min-height: 100vh;
       background: var(--background);
       color: var(--white);
       padding-top: 80px;
     }
-
-    /* Navbar */
     nav {
       background-color: #111827;
       padding: 1rem 2rem;
@@ -49,7 +45,6 @@
       align-items: center;
       box-shadow: 0 2px 10px var(--shadow);
     }
-
     nav .logo {
       font-size: 1.4rem;
       font-weight: bold;
@@ -57,90 +52,38 @@
       align-items: center;
       gap: 10px;
       color: var(--secondary);
-      cursor: default;
     }
-
-    /* Menu */
-    .menu {
-      list-style: none;
+    nav .menu {
       display: flex;
       gap: 20px;
     }
-
-    .menu-item {
-      position: relative;
-    }
-
-    .menu-item > a {
+    nav .menu a {
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      transition: color 0.3s ease;
     }
-
-    /* Submenu */
-    .submenu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #111827;
-      padding: 10px 0;
-      border-radius: 6px;
-      box-shadow: 0 4px 10px var(--shadow);
-      min-width: 180px;
-      z-index: 1001;
+    nav .menu a:hover {
+      color: var(--accent);
     }
-
-    .submenu li {
-      padding: 8px 20px;
-    }
-
-    .submenu li a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 400;
-      display: block;
-      white-space: nowrap;
-    }
-
-    .submenu li a:hover {
-      background-color: var(--secondary);
-      border-radius: 4px;
-    }
-
-    /* Show submenu on hover */
-    .menu-item:hover .submenu {
-      display: block;
-    }
-
-    /* Header */
     header {
       text-align: center;
       margin-bottom: 1rem;
     }
-
     header h1 {
       font-size: 2.5rem;
       font-weight: 700;
       margin-top: 1rem;
     }
-
-    /* Main content */
     main {
       max-width: 1000px;
-      margin: 0 auto;
+      margin: 0 auto 40px;
       background: var(--white);
       border-radius: 16px;
       box-shadow: 0 15px 30px var(--shadow);
       padding: 2rem;
       color: var(--primary);
     }
-
-    /* Search Bar */
     #searchBar {
       width: 100%;
       padding: 12px 18px;
@@ -149,43 +92,34 @@
       border: 2px solid var(--secondary);
       margin-bottom: 1.8rem;
     }
-
-    /* Table */
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0 15px;
       min-width: 800px;
     }
-
     thead tr {
       background-color: var(--secondary);
       color: var(--white);
     }
-
     thead th {
       padding: 15px 10px;
       text-align: left;
       white-space: nowrap;
     }
-
     tbody tr {
       background: var(--gray-light);
       border-radius: 12px;
     }
-
     tbody td {
       padding: 15px 10px;
       font-weight: 500;
       white-space: nowrap;
     }
-
     .amount {
       font-weight: 700;
       color: var(--danger);
     }
-
-    /* Buttons */
     .pay-btn {
       background-color: var(--accent);
       color: var(--white);
@@ -196,18 +130,14 @@
       cursor: pointer;
       transition: background-color 0.25s ease;
     }
-
     .pay-btn:hover {
       background-color: #c2410c;
     }
-
     .pay-btn:disabled {
       background-color: #d1d5db;
       color: #6b7280;
       cursor: not-allowed;
     }
-
-    /* Payment success message */
     #message {
       margin-top: 1.5rem;
       font-weight: 600;
@@ -216,29 +146,28 @@
       text-align: center;
       display: none;
     }
-
-    /* Sections */
+    canvas {
+      margin: 30px auto;
+      display: block;
+      max-width: 500px;
+    }
     section {
       margin-top: 50px;
     }
-
     section h2 {
       font-size: 1.8rem;
       margin-bottom: 15px;
       color: var(--primary);
     }
-
     section ul {
       padding-left: 20px;
       line-height: 1.6;
     }
-
     section ul li {
       color: #374151;
       font-size: 1rem;
+      margin-bottom: 6px;
     }
-
-    /* Map link */
     section a.map-link {
       background-color: #3b82f6;
       color: white;
@@ -249,43 +178,32 @@
       display: inline-block;
       margin-top: 10px;
     }
-
-    /* Responsive adjustments */
+    /* Additional styles for feedback section */
+    #mistakesList li {
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--primary);
+    }
+    #mistakesList input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    /* Responsive */
     @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
+      main {
+        padding: 1rem;
+      }
+      table {
+        min-width: unset;
+        font-size: 0.9rem;
+      }
+      nav .menu {
         gap: 10px;
       }
-
-      .menu {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
+      nav .menu a {
+        font-size: 0.9rem;
       }
-
-      .menu-item {
-        width: 100%;
-      }
-
-      .menu-item > a {
-        padding: 10px 0;
-      }
-
-      .submenu {
-        position: static;
-        box-shadow: none;
-        background-color: transparent;
-        padding: 0;
-        border-radius: 0;
-        display: none;
-      }
-
-      .submenu li {
-        padding: 8px 0 8px 20px;
-      }
-
-      /* We'll add JS toggle for submenu on mobile */
     }
   </style>
 </head>
@@ -296,43 +214,12 @@
   <div class="logo">
     <i class="fas fa-car-crash"></i> TrafficChallan
   </div>
-  <ul class="menu">
-    <li class="menu-item">
-      <a href="#">Home <i class="fas fa-chevron-down"></i></a>
-      <ul class="submenu">
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Live Traffic</a></li>
-        <li><a href="#">Weather on Roads</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Vehicles <i class="fas fa-chevron-down"></i></a>
-      <ul class="submenu">
-        <li><a href="#">My Vehicles</a></li>
-        <li><a href="#">Add Vehicle</a></li>
-        <li><a href="#">Vehicle History</a></li>
-        <li><a href="#">Vehicle Documents</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Payments <i class="fas fa-chevron-down"></i></a>
-      <ul class="submenu">
-        <li><a href="#">Pending Challans</a></li>
-        <li><a href="#">Payment History</a></li>
-        <li><a href="#">Payment Methods</a></li>
-        <li><a href="#">Generate Receipt</a></li>
-      </ul>
-    </li>
-    <li class="menu-item">
-      <a href="#">Help <i class="fas fa-chevron-down"></i></a>
-      <ul class="submenu">
-        <li><a href="#">Traffic Rules</a></li>
-        <li><a href="#">FAQs</a></li>
-        <li><a href="#">Contact Support</a></li>
-        <li><a href="#">Report Issue</a></li>
-      </ul>
-    </li>
-  </ul>
+  <div class="menu">
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-car"></i> Vehicles</a>
+    <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
+    <a href="#"><i class="fas fa-info-circle"></i> Help</a>
+  </div>
 </nav>
 
 <!-- Header -->
@@ -342,6 +229,7 @@
 
 <!-- Main -->
 <main>
+
   <!-- Search Bar -->
   <input type="text" id="searchBar" placeholder="Search by Vehicle No., Owner Name or Challan Type..." />
 
@@ -416,6 +304,51 @@
       Open in Google Maps
     </a>
   </section>
+
+  <!-- Traffic Violation Trends Graph -->
+  <section>
+    <h2>Traffic Violation Trends</h2>
+    <canvas id="trafficChart" width="100%" height="40"></canvas>
+  </section>
+
+  <!-- Traffic Mistakes & Feedback -->
+  <section>
+    <h2>Common Traffic Mistakes & Your Feedback</h2>
+    <p>Please select the traffic mistakes you often notice on the roads. Your feedback helps improve awareness and enforcement.</p>
+    
+    <ul id="mistakesList" style="list-style: none; padding-left: 0;">
+      <li>
+        <label>
+          <input type="checkbox" value="Speeding" /> Speeding
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" value="Signal Jumping" /> Jumping Red Signals
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" value="No Helmet" /> Not Wearing Helmet
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" value="Wrong Parking" /> Illegal Parking
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" value="Distracted Driving" /> Using Mobile While Driving
+        </label>
+      </li>
+    </ul>
+    
+    <button id="submitFeedback" class="pay-btn" style="margin-top: 10px;">Submit Feedback</button>
+    
+    <div id="feedbackResponse" style="margin-top: 15px; font-weight: 600;"></div>
+  </section>
+
 </main>
 
 <!-- Scripts -->
@@ -447,73 +380,143 @@
       c.owner.toLowerCase().includes(f) ||
       challanTypes[c.challanType].label.toLowerCase().includes(f)
     );
-    if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px;">No challans found</td></tr>`;
-      return;
-    }
-    filtered.forEach((challan, i) => {
+    filtered.forEach((c, i) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${challan.vehicleNo}</td>
-        <td>${challan.owner}</td>
-        <td>${challan.vehicleDetails}</td>
-        <td>${challanTypes[challan.challanType].icon} ${challanTypes[challan.challanType].label}</td>
-        <td class="amount">₹${challan.amount}</td>
-        <td><button class="pay-btn" data-index="${i}">Pay Now</button></td>
-      `;
+
+      const tdVehicle = document.createElement('td');
+      tdVehicle.textContent = c.vehicleNo;
+      tr.appendChild(tdVehicle);
+
+      const tdOwner = document.createElement('td');
+      tdOwner.textContent = c.owner;
+      tr.appendChild(tdOwner);
+
+      const tdVehicleDetails = document.createElement('td');
+      tdVehicleDetails.textContent = c.vehicleDetails;
+      tr.appendChild(tdVehicleDetails);
+
+      const tdChallanType = document.createElement('td');
+      tdChallanType.textContent = `${challanTypes[c.challanType].icon} ${challanTypes[c.challanType].label}`;
+      tr.appendChild(tdChallanType);
+
+      const tdAmount = document.createElement('td');
+      tdAmount.className = 'amount';
+      tdAmount.textContent = `₹${c.amount}`;
+      tr.appendChild(tdAmount);
+
+      const tdPay = document.createElement('td');
+      const payBtn = document.createElement('button');
+      payBtn.className = 'pay-btn';
+      payBtn.textContent = 'Pay Now';
+      payBtn.addEventListener('click', () => payChallan(i));
+      tdPay.appendChild(payBtn);
+      tr.appendChild(tdPay);
+
       tbody.appendChild(tr);
     });
 
-    // Add event listeners for Pay buttons
-    document.querySelectorAll('.pay-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = btn.getAttribute('data-index');
-        // Simulate payment
-        btn.disabled = true;
-        btn.textContent = 'Processing...';
-        setTimeout(() => {
-          btn.textContent = 'Paid';
-          btn.disabled = true;
-          showMessage('Payment Successful! Thank you.');
-          // Optionally remove or mark challan as paid
-        }, 1000);
-      });
-    });
+    if (filtered.length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      td.style.textAlign = 'center';
+      td.style.color = '#6b7280';
+      td.style.fontWeight = '600';
+      td.textContent = 'No challans found.';
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    }
   }
 
-  function showMessage(msg) {
-    messageDiv.textContent = '';
-    messageDiv.style.display = 'block';
-    messageDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+  function payChallan(index) {
+    const payBtn = tbody.children[index].querySelector('.pay-btn');
+    payBtn.disabled = true;
+    payBtn.textContent = 'Processing...';
+
     setTimeout(() => {
-      messageDiv.style.display = 'none';
-    }, 3500);
+      challans.splice(index, 1);
+      renderTable(searchBar.value);
+      messageDiv.style.display = 'block';
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 3500);
+    }, 1200);
   }
 
-  searchBar.addEventListener('input', e => {
-    renderTable(e.target.value);
+  searchBar.addEventListener('input', () => {
+    renderTable(searchBar.value);
   });
 
-  // Initial render
   renderTable();
 
-  // Mobile submenu toggle
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    document.querySelectorAll('.menu-item > a').forEach(anchor => {
-      anchor.addEventListener('click', e => {
-        e.preventDefault();
-        const submenu = anchor.nextElementSibling;
-        if (!submenu) return;
-        if (submenu.style.display === 'block') {
-          submenu.style.display = 'none';
-        } else {
-          // Hide all other submenus first
-          document.querySelectorAll('.submenu').forEach(sm => (sm.style.display = 'none'));
-          submenu.style.display = 'block';
+  // Chart.js traffic violation data
+  const ctx = document.getElementById('trafficChart').getContext('2d');
+  const trafficChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Speeding', 'Signal Jumping', 'No Helmet', 'Wrong Parking', 'Distracted Driving'],
+      datasets: [{
+        label: 'Number of Violations',
+        data: [120, 95, 80, 70, 60], // Example data
+        backgroundColor: [
+          '#ef4444', // red
+          '#f97316', // orange
+          '#3b82f6', // blue
+          '#10b981', // green
+          '#8b5cf6'  // purple
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Violations Count' }
+        },
+        x: {
+          title: { display: true, text: 'Violation Type' }
         }
-      });
+      }
+    }
+  });
+
+  // Feedback handling
+  const submitBtn = document.getElementById('submitFeedback');
+  const feedbackResponse = document.getElementById('feedbackResponse');
+  const mistakesList = document.getElementById('mistakesList');
+
+  submitBtn.addEventListener('click', () => {
+    const checked = Array.from(mistakesList.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(input => input.value);
+
+    if (checked.length === 0) {
+      feedbackResponse.style.color = '#ef4444';
+      feedbackResponse.textContent = 'Please select at least one traffic mistake.';
+      return;
+    }
+
+    const suggestions = {
+      "Speeding": "Please adhere to speed limits to avoid accidents and fines.",
+      "Signal Jumping": "Obey traffic signals to ensure safety for everyone.",
+      "No Helmet": "Wearing a helmet saves lives — always wear one.",
+      "Wrong Parking": "Park only in designated areas to avoid penalties.",
+      "Distracted Driving": "Avoid using your phone while driving; stay focused."
+    };
+
+    let responseText = 'Thank you for your feedback! Here are some suggestions:<br><br>';
+
+    checked.forEach(item => {
+      responseText += `• ${suggestions[item]}<br>`;
     });
-  }
+
+    feedbackResponse.style.color = '#059669'; // green
+    feedbackResponse.innerHTML = responseText;
+  });
 </script>
 
 </body>
