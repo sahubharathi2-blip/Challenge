@@ -1,375 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Traffic Challan Dashboard</title>
-
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traffic Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-    :root {
-      --primary: #1f2937;
-      --secondary: #3b82f6;
-      --accent: #f97316;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
-      --white: #ffffff;
-      --gray-light: #f3f4f6;
-      --shadow: rgba(0, 0, 0, 0.15);
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-      font-family: 'Roboto', sans-serif;
-    }
     body {
-      min-height: 100vh;
-      background: var(--background);
-      color: var(--white);
-      padding-top: 80px;
-    }
-    nav {
-      background-color: #111827;
-      padding: 1rem 2rem;
-      color: var(--white);
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px var(--shadow);
-    }
-    nav .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--secondary);
-    }
-    nav .menu {
-      display: flex;
-      gap: 20px;
-    }
-    nav .menu a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    nav .menu a:hover {
-      color: var(--accent);
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
     }
     header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 0;
       text-align: center;
-      margin-bottom: 1rem;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-top: 1rem;
     }
     main {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 15px 30px var(--shadow);
-      padding: 2rem;
-      color: var(--primary);
+      padding: 20px;
     }
-    #searchBar {
-      width: 100%;
-      padding: 12px 18px;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: 2px solid var(--secondary);
-      margin-bottom: 1.8rem;
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 15px;
-      min-width: 800px;
-    }
-    thead tr {
-      background-color: var(--secondary);
-      color: var(--white);
-    }
-    thead th {
-      padding: 15px 10px;
-      text-align: left;
-      white-space: nowrap;
-    }
-    tbody tr {
-      background: var(--gray-light);
-      border-radius: 12px;
-    }
-    tbody td {
-      padding: 15px 10px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    .amount {
-      font-weight: 700;
-      color: var(--danger);
-    }
-    .pay-btn {
-      background-color: var(--accent);
-      color: var(--white);
-      border: none;
-      padding: 10px 18px;
-      font-weight: 700;
+    .card {
+      background: #fff;
       border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.25s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      flex: 1;
+      min-width: 300px;
     }
-    .pay-btn:hover {
-      background-color: #c2410c;
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
     }
-    .pay-btn:disabled {
-      background-color: #d1d5db;
-      color: #6b7280;
-      cursor: not-allowed;
+    ul {
+      list-style: none;
+      padding: 0;
     }
-    #message {
-      margin-top: 1.5rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--success);
-      text-align: center;
-      display: none;
+    li {
+      margin-bottom: 8px;
     }
-    canvas {
-      margin: 30px auto;
-      display: block;
-      max-width: 500px;
-    }
-    section {
-      margin-top: 50px;
-    }
-    section h2 {
-      font-size: 1.8rem;
+    .news-item {
       margin-bottom: 15px;
-      color: var(--primary);
     }
-    section ul {
-      padding-left: 20px;
-      line-height: 1.6;
-    }
-    section ul li {
-      color: #374151;
-      font-size: 1rem;
-    }
-    section a.map-link {
-      background-color: #3b82f6;
-      color: white;
-      padding: 12px 24px;
-      font-weight: bold;
+    .news-item a {
+      color: #333;
       text-decoration: none;
-      border-radius: 8px;
-      display: inline-block;
-      margin-top: 10px;
+      font-weight: bold;
+    }
+    .news-item a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
     }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav>
-  <div class="logo">
-    <i class="fas fa-car-crash"></i> TrafficChallan
-  </div>
-  <div class="menu">
-    <a href="#"><i class="fas fa-home"></i> Home</a>
-    <a href="#"><i class="fas fa-car"></i> Vehicles</a>
-    <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
-    <a href="#"><i class="fas fa-info-circle"></i> Help</a>
-  </div>
-</nav>
+  <header>
+    <h1>Traffic Dashboard</h1>
+  </header>
 
-<!-- Header -->
-<header>
-  <h1><i class="fas fa-money-check-alt"></i> Pay Your Challans</h1>
-</header>
+  <main>
+    <div class="container">
+      <!-- Traffic Rules Section -->
+      <div class="card">
+        <h2>Traffic Rules</h2>
+        <ul>
+          <li>Always wear a helmet while riding two-wheelers.</li>
+          <li>Use seat belts at all times in four-wheelers.</li>
+          <li>Obey traffic signals and signs.</li>
+          <li>Do not use mobile phones while driving.</li>
+          <li>Maintain a safe distance from other vehicles.</li>
+        </ul>
+      </div>
 
-<!-- Main -->
-<main>
+      <!-- State Challans Section -->
+      <div class="card">
+        <h2>Traffic Challans by State</h2>
+        <ul>
+          <li><strong>Andhra Pradesh:</strong> ₹500 for overspeeding.</li>
+          <li><strong>Karnataka:</strong> ₹300 for not wearing a helmet.</li>
+          <li><strong>Maharashtra:</strong> ₹1000 for jumping a red light.</li>
+          <li><strong>Delhi:</strong> ₹500 for using a mobile phone while driving.</li>
+        </ul>
+      </div>
 
-  <!-- Pie Chart -->
-  <canvas id="laneChart" width="400" height="400"></canvas>
+      <!-- Real-Time Traffic Information Section -->
+      <div class="card">
+        <h2>Real-Time Traffic Information</h2>
+        <p>Use <a href="https://maps.google.com" target="_blank">Google Maps</a> to check live traffic conditions and plan your route accordingly.</p>
+      </div>
 
-  <!-- Search Bar -->
-  <input type="text" id="searchBar" placeholder="Search by Vehicle No., Owner Name or Challan Type..." />
+      <!-- Weather Conditions on Roads Section -->
+      <div class="card">
+        <h2>Weather Conditions on Roads</h2>
+        <p>Current weather in Visakhapatnam: <strong>Mostly cloudy, 30°C</strong></p>
+        <p>Forecast for the next 7 days:</p>
+        <ul>
+          <li>Sep 11: High 32°C, Low 27°C, A bit of rain in the morning.</li>
+          <li>Sep 12: High 31°C, Low 27°C, Cloudy with a bit of rain in the afternoon.</li>
+          <li>Sep 13: High 31°C, Low 27°C, Periods of rain.</li>
+          <li>Sep 14: High 31°C, Low 28°C, Periods of rain.</li>
+          <li>Sep 15: High 32°C, Low 28°C, Considerable cloudiness with a bit of rain.</li>
+          <li>Sep 16: High 32°C, Low 26°C, Sun through high clouds.</li>
+          <li>Sep 17: High 34°C, Low 26°C, Considerable cloudiness in the morning with a bit of rain, then intervals of clouds and sunshine in the afternoon.</li>
+        </ul>
+      </div>
 
-  <!-- Challan Table -->
-  <table>
-    <thead>
-      <tr>
-        <th>Vehicle No.</th>
-        <th>Owner Name</th>
-        <th>Vehicle Details</th>
-        <th>Challan Type</th>
-        <th>Amount</th>
-        <th>Pay</th>
-      </tr>
-    </thead>
-    <tbody id="challanTableBody"></tbody>
-  </table>
+      <!-- Latest Traffic News Section -->
+      <div class="card">
+        <h2>Latest Traffic News</h2>
+        <div class="news-item">
+          <a href="https://timesofindia.indiatimes.com/city/hyderabad/justice-sapre-reviews-road-safety-in-telangana-urges-collective-action/articleshow/123815779.cms" target="_blank">
+            Justice Sapre reviews road safety in Telangana, urges collective action
+          </a>
+          <p>Justice Abhay Manohar Sapre led a state-level review meeting in Telangana to assess road safety efforts, emphasizing inter-departmental cooperation to make Telangana a national leader in road safety.</p>
+        </div>
+        <div class="news-item">
+          <a href="https://timesofindia.indiatimes.com/city/vijayawada/guntur-secures-sixth-place-in-swachh-vayu-survekshan-under-national-clean-air-programme/articleshow/123814157.cms" target="_blank">
+            Guntur secures sixth place in Swachh Vayu Survekshan under National Clean Air Programme
+          </a>
+          <p>Guntur city has achieved a significant milestone by securing sixth place in the Swachh Vayu Survekshan under the National Clean Air Programme, becoming the only city in South India to earn this distinction.</p>
+        </div>
+      </div>
+    </div>
+  </main>
 
-  <div id="message"><i class="fas fa-check-circle"></i> Payment Successful! Thank you.</div>
-
-  <!-- Traffic Rules -->
-  <section>
-    <h2>Traffic Rules to Follow</h2>
-    <ul>
-      <li>Always wear a helmet while riding a two-wheeler.</li>
-      <li>Do not drink and drive.</li>
-      <li>Follow speed limits and road signs.</li>
-      <li>Always carry your driving license and vehicle documents.</li>
-      <li>Obey traffic signals and lane discipline.</li>
-    </ul>
-  </section>
-
-  <!-- State-wise Challans -->
-  <section>
-    <h2>State-wise Recent Challans</h2>
-    <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;">
-      <thead style="background: #3b82f6; color: white;">
-        <tr>
-          <th style="padding: 10px;">State</th>
-          <th style="padding: 10px;">Challan Type</th>
-          <th style="padding: 10px;">Date</th>
-          <th style="padding: 10px;">Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding: 10px;">Maharashtra</td>
-          <td style="padding: 10px;">Speeding</td>
-          <td style="padding: 10px;">2025-09-10</td>
-          <td style="padding: 10px;">₹1500</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px;">Karnataka</td>
-          <td style="padding: 10px;">Signal Violation</td>
-          <td style="padding: 10px;">2025-09-09</td>
-          <td style="padding: 10px;">₹1200</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px;">Delhi</td>
-          <td style="padding: 10px;">Illegal Parking</td>
-          <td style="padding: 10px;">2025-09-08</td>
-          <td style="padding: 10px;">₹800</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- Maps Integration -->
-  <section style="text-align: center;">
-    <h2>Check Live Traffic Near You</h2>
-    <a class="map-link" href="https://www.google.com/maps/@?api=1&map_action=map&layer=traffic" target="_blank">
-      Open in Google Maps
-    </a>
-  </section>
-
-</main>
-
-<!-- Scripts -->
-<script>
-  // Challan Types
-  const challanTypes = {
-    speeding: { icon: '🚗', label: 'Speeding' },
-    parking: { icon: '🅿️', label: 'Illegal Parking' },
-    signal: { icon: '🚦', label: 'Signal Violation' },
-    document: { icon: '📄', label: 'Document Violation' }
-  };
-
-  const challans = [
-    { vehicleNo: "KA-01-HH-1234", owner: "Rajesh Kumar", vehicleDetails: "Car, 2018 Model", challanType: "speeding", amount: 1500 },
-    { vehicleNo: "MH-12-AB-4567", owner: "Sneha Patel", vehicleDetails: "Motorcycle, 2020 Model", challanType: "parking", amount: 500 },
-    { vehicleNo: "DL-04-XY-9876", owner: "Amit Singh", vehicleDetails: "Truck, 2015 Model", challanType: "signal", amount: 1200 },
-    { vehicleNo: "TN-09-ZZ-5555", owner: "Priya Sharma", vehicleDetails: "Car, 2019 Model", challanType: "document", amount: 800 }
-  ];
-
-  const tbody = document.getElementById('challanTableBody');
-  const messageDiv = document.getElementById('message');
-  const searchBar = document.getElementById('searchBar');
-
-  function renderTable(filter = '') {
-    const f = filter.toLowerCase();
-    tbody.innerHTML = '';
-    const filtered = challans.filter(c =>
-      c.vehicleNo.toLowerCase().includes(f) ||
-      c.owner.toLowerCase().includes(f) ||
-      challanTypes[c.challanType].label.toLowerCase().includes(f)
-    );
-    if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No matching challans found.</td></tr>`;
-      return;
-    }
-    filtered.forEach((c, index) => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${c.vehicleNo}</td>
-          <td>${c.owner}</td>
-          <td>${c.vehicleDetails}</td>
-          <td>${challanTypes[c.challanType].icon} ${challanTypes[c.challanType].label}</td>
-          <td class="amount">₹${c.amount}</td>
-          <td><button class="pay-btn" onclick="payChallan(${index}, this)">Pay Now</button></td>
-        </tr>`;
-    });
-  }
-
-  function payChallan(index, btn) {
-    btn.disabled = true;
-    btn.innerHTML = 'Processing...';
-    setTimeout(() => {
-      challans.splice(index, 1);
-      renderTable(searchBar.value);
-      messageDiv.style.display = 'block';
-      setTimeout(() => messageDiv.style.display = 'none', 3000);
-    }, 2000);
-  }
-
-  searchBar.addEventListener('input', () => renderTable(searchBar.value));
-  renderTable();
-
-  // Pie Chart for Lane Distribution
-  new Chart(document.getElementById('laneChart'), {
-    type: 'pie',
-    data: {
-      labels: ['Four-Wheeler', 'Two-Wheeler', 'Emergency'],
-      datasets: [{
-        label: 'Lane Distribution',
-        data: [60, 30, 10],
-        backgroundColor: ['#3b82f6', '#10b981', '#ef4444']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Transportation Sector Lane Distribution',
-          color: '#1f2937',
-          font: { size: 18 }
-        },
-        legend: {
-          position: 'bottom',
-          labels: { color: '#1f2937' }
-        }
-      }
-    }
-  });
-</script>
+  <footer>
+    <p>&copy; 2025 Traffic Dashboard. All rights reserved.</p>
+  </footer>
 
 </body>
 </html>
