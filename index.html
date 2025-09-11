@@ -7,10 +7,10 @@
 
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
     :root {
       --primary: #1f2937;
       --secondary: #3b82f6;
@@ -22,17 +22,21 @@
       --gray-light: #f3f4f6;
       --shadow: rgba(0, 0, 0, 0.15);
     }
+
     * {
       box-sizing: border-box;
       margin: 0; padding: 0;
       font-family: 'Roboto', sans-serif;
     }
+
     body {
       min-height: 100vh;
       background: var(--background);
       color: var(--white);
       padding-top: 80px;
     }
+
+    /* Navbar */
     nav {
       background-color: #111827;
       padding: 1rem 2rem;
@@ -45,6 +49,7 @@
       align-items: center;
       box-shadow: 0 2px 10px var(--shadow);
     }
+
     nav .logo {
       font-size: 1.4rem;
       font-weight: bold;
@@ -52,29 +57,79 @@
       align-items: center;
       gap: 10px;
       color: var(--secondary);
+      cursor: default;
     }
-    nav .menu {
+
+    /* Menu */
+    .menu {
+      list-style: none;
       display: flex;
       gap: 20px;
     }
-    nav .menu a {
+
+    .menu-item {
+      position: relative;
+    }
+
+    .menu-item > a {
       color: var(--white);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    nav .menu a:hover {
-      color: var(--accent);
+
+    /* Submenu */
+    .submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #111827;
+      padding: 10px 0;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px var(--shadow);
+      min-width: 180px;
+      z-index: 1001;
     }
+
+    .submenu li {
+      padding: 8px 20px;
+    }
+
+    .submenu li a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 400;
+      display: block;
+      white-space: nowrap;
+    }
+
+    .submenu li a:hover {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    /* Show submenu on hover */
+    .menu-item:hover .submenu {
+      display: block;
+    }
+
+    /* Header */
     header {
       text-align: center;
       margin-bottom: 1rem;
     }
+
     header h1 {
       font-size: 2.5rem;
       font-weight: 700;
       margin-top: 1rem;
     }
+
+    /* Main content */
     main {
       max-width: 1000px;
       margin: 0 auto;
@@ -84,6 +139,8 @@
       padding: 2rem;
       color: var(--primary);
     }
+
+    /* Search Bar */
     #searchBar {
       width: 100%;
       padding: 12px 18px;
@@ -92,34 +149,43 @@
       border: 2px solid var(--secondary);
       margin-bottom: 1.8rem;
     }
+
+    /* Table */
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0 15px;
       min-width: 800px;
     }
+
     thead tr {
       background-color: var(--secondary);
       color: var(--white);
     }
+
     thead th {
       padding: 15px 10px;
       text-align: left;
       white-space: nowrap;
     }
+
     tbody tr {
       background: var(--gray-light);
       border-radius: 12px;
     }
+
     tbody td {
       padding: 15px 10px;
       font-weight: 500;
       white-space: nowrap;
     }
+
     .amount {
       font-weight: 700;
       color: var(--danger);
     }
+
+    /* Buttons */
     .pay-btn {
       background-color: var(--accent);
       color: var(--white);
@@ -130,14 +196,18 @@
       cursor: pointer;
       transition: background-color 0.25s ease;
     }
+
     .pay-btn:hover {
       background-color: #c2410c;
     }
+
     .pay-btn:disabled {
       background-color: #d1d5db;
       color: #6b7280;
       cursor: not-allowed;
     }
+
+    /* Payment success message */
     #message {
       margin-top: 1.5rem;
       font-weight: 600;
@@ -146,27 +216,29 @@
       text-align: center;
       display: none;
     }
-    canvas {
-      margin: 30px auto;
-      display: block;
-      max-width: 500px;
-    }
+
+    /* Sections */
     section {
       margin-top: 50px;
     }
+
     section h2 {
       font-size: 1.8rem;
       margin-bottom: 15px;
       color: var(--primary);
     }
+
     section ul {
       padding-left: 20px;
       line-height: 1.6;
     }
+
     section ul li {
       color: #374151;
       font-size: 1rem;
     }
+
+    /* Map link */
     section a.map-link {
       background-color: #3b82f6;
       color: white;
@@ -177,6 +249,44 @@
       display: inline-block;
       margin-top: 10px;
     }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .menu {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+      }
+
+      .menu-item {
+        width: 100%;
+      }
+
+      .menu-item > a {
+        padding: 10px 0;
+      }
+
+      .submenu {
+        position: static;
+        box-shadow: none;
+        background-color: transparent;
+        padding: 0;
+        border-radius: 0;
+        display: none;
+      }
+
+      .submenu li {
+        padding: 8px 0 8px 20px;
+      }
+
+      /* We'll add JS toggle for submenu on mobile */
+    }
   </style>
 </head>
 <body>
@@ -186,12 +296,43 @@
   <div class="logo">
     <i class="fas fa-car-crash"></i> TrafficChallan
   </div>
-  <div class="menu">
-    <a href="#"><i class="fas fa-home"></i> Home</a>
-    <a href="#"><i class="fas fa-car"></i> Vehicles</a>
-    <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
-    <a href="#"><i class="fas fa-info-circle"></i> Help</a>
-  </div>
+  <ul class="menu">
+    <li class="menu-item">
+      <a href="#">Home <i class="fas fa-chevron-down"></i></a>
+      <ul class="submenu">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Live Traffic</a></li>
+        <li><a href="#">Weather on Roads</a></li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a href="#">Vehicles <i class="fas fa-chevron-down"></i></a>
+      <ul class="submenu">
+        <li><a href="#">My Vehicles</a></li>
+        <li><a href="#">Add Vehicle</a></li>
+        <li><a href="#">Vehicle History</a></li>
+        <li><a href="#">Vehicle Documents</a></li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a href="#">Payments <i class="fas fa-chevron-down"></i></a>
+      <ul class="submenu">
+        <li><a href="#">Pending Challans</a></li>
+        <li><a href="#">Payment History</a></li>
+        <li><a href="#">Payment Methods</a></li>
+        <li><a href="#">Generate Receipt</a></li>
+      </ul>
+    </li>
+    <li class="menu-item">
+      <a href="#">Help <i class="fas fa-chevron-down"></i></a>
+      <ul class="submenu">
+        <li><a href="#">Traffic Rules</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Contact Support</a></li>
+        <li><a href="#">Report Issue</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
 
 <!-- Header -->
@@ -201,10 +342,6 @@
 
 <!-- Main -->
 <main>
-
-  <!-- Pie Chart -->
-  <canvas id="laneChart" width="400" height="400"></canvas>
-
   <!-- Search Bar -->
   <input type="text" id="searchBar" placeholder="Search by Vehicle No., Owner Name or Challan Type..." />
 
@@ -275,11 +412,10 @@
   <!-- Maps Integration -->
   <section style="text-align: center;">
     <h2>Check Live Traffic Near You</h2>
-    <a class="map-link" href="https://www.google.com/maps/@?api=1&map_action=map&layer=traffic" target="_blank">
+    <a class="map-link" href="https://www.google.com/maps/@?api=1&map_action=map&layer=traffic" target="_blank" rel="noopener noreferrer">
       Open in Google Maps
     </a>
   </section>
-
 </main>
 
 <!-- Scripts -->
@@ -312,63 +448,72 @@
       challanTypes[c.challanType].label.toLowerCase().includes(f)
     );
     if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No matching challans found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px;">No challans found</td></tr>`;
       return;
     }
-    filtered.forEach((c, index) => {
-      tbody.innerHTML += `
-        <tr>
-          <td>${c.vehicleNo}</td>
-          <td>${c.owner}</td>
-          <td>${c.vehicleDetails}</td>
-          <td>${challanTypes[c.challanType].icon} ${challanTypes[c.challanType].label}</td>
-          <td class="amount">₹${c.amount}</td>
-          <td><button class="pay-btn" onclick="payChallan(${index}, this)">Pay Now</button></td>
-        </tr>`;
+    filtered.forEach((challan, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${challan.vehicleNo}</td>
+        <td>${challan.owner}</td>
+        <td>${challan.vehicleDetails}</td>
+        <td>${challanTypes[challan.challanType].icon} ${challanTypes[challan.challanType].label}</td>
+        <td class="amount">₹${challan.amount}</td>
+        <td><button class="pay-btn" data-index="${i}">Pay Now</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Add event listeners for Pay buttons
+    document.querySelectorAll('.pay-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const idx = btn.getAttribute('data-index');
+        // Simulate payment
+        btn.disabled = true;
+        btn.textContent = 'Processing...';
+        setTimeout(() => {
+          btn.textContent = 'Paid';
+          btn.disabled = true;
+          showMessage('Payment Successful! Thank you.');
+          // Optionally remove or mark challan as paid
+        }, 1000);
+      });
     });
   }
 
-  function payChallan(index, btn) {
-    btn.disabled = true;
-    btn.innerHTML = 'Processing...';
+  function showMessage(msg) {
+    messageDiv.textContent = '';
+    messageDiv.style.display = 'block';
+    messageDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
     setTimeout(() => {
-      challans.splice(index, 1);
-      renderTable(searchBar.value);
-      messageDiv.style.display = 'block';
-      setTimeout(() => messageDiv.style.display = 'none', 3000);
-    }, 2000);
+      messageDiv.style.display = 'none';
+    }, 3500);
   }
 
-  searchBar.addEventListener('input', () => renderTable(searchBar.value));
+  searchBar.addEventListener('input', e => {
+    renderTable(e.target.value);
+  });
+
+  // Initial render
   renderTable();
 
-  // Pie Chart for Lane Distribution
-  new Chart(document.getElementById('laneChart'), {
-    type: 'pie',
-    data: {
-      labels: ['Four-Wheeler', 'Two-Wheeler', 'Emergency'],
-      datasets: [{
-        label: 'Lane Distribution',
-        data: [60, 30, 10],
-        backgroundColor: ['#3b82f6', '#10b981', '#ef4444']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: {
-          display: true,
-          text: 'Transportation Sector Lane Distribution',
-          color: '#1f2937',
-          font: { size: 18 }
-        },
-        legend: {
-          position: 'bottom',
-          labels: { color: '#1f2937' }
+  // Mobile submenu toggle
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    document.querySelectorAll('.menu-item > a').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        e.preventDefault();
+        const submenu = anchor.nextElementSibling;
+        if (!submenu) return;
+        if (submenu.style.display === 'block') {
+          submenu.style.display = 'none';
+        } else {
+          // Hide all other submenus first
+          document.querySelectorAll('.submenu').forEach(sm => (sm.style.display = 'none'));
+          submenu.style.display = 'block';
         }
-      }
-    }
-  });
+      });
+    });
+  }
 </script>
 
 </body>
