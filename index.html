@@ -1,148 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Traffic Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Traffic Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-+e3xxN1BnhgF+iwTfDK7lLB1GzU19FtTYB3zF+f68Lz0HckZC1QkK+uz4djEFd+n8T6VNhIjx4FeuUjjIdIoZw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
   <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
+      font-family: 'Inter', sans-serif;
+      background: #f9fafb;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     header {
-      background-color: #333;
-      color: #fff;
-      padding: 10px 0;
+      background: #2563eb;
+      color: white;
+      padding: 1.2rem 2rem;
       text-align: center;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      font-size: 1.8rem;
     }
     main {
-      padding: 20px;
-    }
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+      flex: 1;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+      gap: 2rem;
     }
     .card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      flex: 1;
-      min-width: 300px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.8rem 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease;
     }
-    h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
     }
-    ul {
+    .card h2 {
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: #1e293b;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 0.4rem;
+    }
+    ul.rules-list, ul.challan-list, ul.weather-list {
       list-style: none;
-      padding: 0;
+      padding-left: 0;
+      margin: 0;
     }
-    li {
+    ul.rules-list li {
+      margin-bottom: 14px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #334155;
+    }
+    ul.rules-list li i {
+      color: #2563eb;
+      font-size: 1.3rem;
+      min-width: 22px;
+      text-align: center;
+    }
+    ul.challan-list li {
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: #475569;
+    }
+    ul.weather-list li {
       margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #475569;
     }
+    .traffic-info p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #334155;
+    }
+    .traffic-info a {
+      color: #2563eb;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+    .traffic-info a:hover {
+      border-color: #2563eb;
+    }
+    .weather-temp {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: #2563eb;
+    }
+    .weather-desc {
+      font-style: italic;
+      margin-bottom: 1rem;
+      color: #475569;
+    }
+    iframe {
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+    /* News section */
     .news-item {
-      margin-bottom: 15px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      transition: background 0.2s ease;
+    }
+    .news-item:hover {
+      background: #e0e7ff;
     }
     .news-item a {
-      color: #333;
+      font-weight: 600;
+      color: #1e293b;
       text-decoration: none;
-      font-weight: bold;
+      font-size: 1rem;
     }
     .news-item a:hover {
       text-decoration: underline;
+      color: #2563eb;
+    }
+    .news-item p {
+      font-size: 0.9rem;
+      margin-top: 6px;
+      color: #475569;
     }
     footer {
-      background-color: #333;
-      color: #fff;
+      background: #1e293b;
+      color: white;
       text-align: center;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
+      padding: 1rem 0;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+    }
+
+    /* Responsive tweaks */
+    @media(max-width: 450px) {
+      header h1 {
+        font-size: 1.4rem;
+      }
+      main {
+        grid-template-columns: 1fr;
+        margin: 1rem auto;
+      }
+      .card {
+        padding: 1.2rem 1.5rem;
+      }
+      .weather-temp {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
 <body>
-
   <header>
-    <h1>Traffic Dashboard</h1>
+    <h1><i class="fas fa-road"></i> Smart Traffic Dashboard</h1>
   </header>
 
   <main>
-    <div class="container">
-      <!-- Traffic Rules Section -->
-      <div class="card">
-        <h2>Traffic Rules</h2>
-        <ul>
-          <li>Always wear a helmet while riding two-wheelers.</li>
-          <li>Use seat belts at all times in four-wheelers.</li>
-          <li>Obey traffic signals and signs.</li>
-          <li>Do not use mobile phones while driving.</li>
-          <li>Maintain a safe distance from other vehicles.</li>
-        </ul>
-      </div>
+    <!-- Traffic Rules -->
+    <section class="card">
+      <h2><i class="fas fa-shield-alt"></i> Essential Traffic Rules</h2>
+      <ul class="rules-list" aria-label="Traffic Rules List">
+        <li><i class="fas fa-motorcycle"></i> Always wear a helmet on two-wheelers.</li>
+        <li><i class="fas fa-car-seat"></i> Use seat belts inside four-wheelers at all times.</li>
+        <li><i class="fas fa-traffic-light"></i> Obey traffic signals and signs strictly.</li>
+        <li><i class="fas fa-mobile-alt"></i> Avoid using mobile phones while driving.</li>
+        <li><i class="fas fa-car-side"></i> Maintain a safe distance from other vehicles.</li>
+      </ul>
+    </section>
 
-      <!-- State Challans Section -->
-      <div class="card">
-        <h2>Traffic Challans by State</h2>
-        <ul>
-          <li><strong>Andhra Pradesh:</strong> ₹500 for overspeeding.</li>
-          <li><strong>Karnataka:</strong> ₹300 for not wearing a helmet.</li>
-          <li><strong>Maharashtra:</strong> ₹1000 for jumping a red light.</li>
-          <li><strong>Delhi:</strong> ₹500 for using a mobile phone while driving.</li>
-        </ul>
-      </div>
+    <!-- State Challans -->
+    <section class="card">
+      <h2><i class="fas fa-file-invoice-dollar"></i> State-wise Traffic Challans</h2>
+      <ul class="challan-list" aria-label="State Wise Challans List">
+        <li><strong>Andhra Pradesh</strong> – ₹500 for overspeeding (Effective from 01-Oct-2025)</li>
+        <li><strong>Karnataka</strong> – ₹300 for no helmet (Effective from 15-Sep-2025)</li>
+        <li><strong>Maharashtra</strong> – ₹1000 for red light jump (Effective from 20-Sep-2025)</li>
+        <li><strong>Delhi</strong> – ₹500 for mobile phone use while driving (Effective from 10-Oct-2025)</li>
+      </ul>
+    </section>
 
-      <!-- Real-Time Traffic Information Section -->
-      <div class="card">
-        <h2>Real-Time Traffic Information</h2>
-        <p>Use <a href="https://maps.google.com" target="_blank">Google Maps</a> to check live traffic conditions and plan your route accordingly.</p>
-      </div>
+    <!-- Real-time Traffic with Map -->
+    <section class="card traffic-info" aria-label="Real-time Traffic Information">
+      <h2><i class="fas fa-map-marked-alt"></i> Real-Time Traffic Info</h2>
+      <p>Check live traffic and road conditions with <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>.</p>
+      <!-- Embedded Google Maps showing traffic layer in a popular city -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3888.6753019323073!2d77.59456331520314!3d12.971598390856753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1616022153681!5m2!1sen!2sin"
+        allowfullscreen=""
+        loading="lazy"
+        title="Real-time traffic Google Map"
+      ></iframe>
+    </section>
 
-      <!-- Weather Conditions on Roads Section -->
-      <div class="card">
-        <h2>Weather Conditions on Roads</h2>
-        <p>Current weather in Visakhapatnam: <strong>Mostly cloudy, 30°C</strong></p>
-        <p>Forecast for the next 7 days:</p>
-        <ul>
-          <li>Sep 11: High 32°C, Low 27°C, A bit of rain in the morning.</li>
-          <li>Sep 12: High 31°C, Low 27°C, Cloudy with a bit of rain in the afternoon.</li>
-          <li>Sep 13: High 31°C, Low 27°C, Periods of rain.</li>
-          <li>Sep 14: High 31°C, Low 28°C, Periods of rain.</li>
-          <li>Sep 15: High 32°C, Low 28°C, Considerable cloudiness with a bit of rain.</li>
-          <li>Sep 16: High 32°C, Low 26°C, Sun through high clouds.</li>
-          <li>Sep 17: High 34°C, Low 26°C, Considerable cloudiness in the morning with a bit of rain, then intervals of clouds and sunshine in the afternoon.</li>
-        </ul>
-      </div>
+    <!-- Weather info -->
+    <section class="card" aria-label="Weather Conditions">
+      <h2><i class="fas fa-cloud-sun"></i> Road Weather Update</h2>
+      <div class="weather-temp" aria-live="polite">30°C</div>
+      <div class="weather-desc">Mostly Cloudy in Visakhapatnam</div>
+      <ul class="weather-list" aria-label="7-day Weather Forecast">
+        <li>Sep 11: High 32°C, Low 27°C, Morning showers.</li>
+        <li>Sep 12: High 31°C, Low 27°C, Afternoon rain possible.</li>
+        <li>Sep 13: High 31°C, Low 27°C, Rain throughout the day.</li>
+        <li>Sep 14: High 31°C, Low 28°C, Periods of rain.</li>
+        <li>Sep 15: High 32°C, Low 28°C, Cloudy with rain.</li>
+        <li>Sep 16: High 32°C, Low 26°C, Mostly sunny.</li>
+        <li>Sep 17: High 34°C, Low 26°C, Cloudy with occasional rain.</li>
+      </ul>
+    </section>
 
-      <!-- Latest Traffic News Section -->
-      <div class="card">
-        <h2>Latest Traffic News</h2>
-        <div class="news-item">
-          <a href="https://timesofindia.indiatimes.com/city/hyderabad/justice-sapre-reviews-road-safety-in-telangana-urges-collective-action/articleshow/123815779.cms" target="_blank">
-            Justice Sapre reviews road safety in Telangana, urges collective action
-          </a>
-          <p>Justice Abhay Manohar Sapre led a state-level review meeting in Telangana to assess road safety efforts, emphasizing inter-departmental cooperation to make Telangana a national leader in road safety.</p>
-        </div>
-        <div class="news-item">
-          <a href="https://timesofindia.indiatimes.com/city/vijayawada/guntur-secures-sixth-place-in-swachh-vayu-survekshan-under-national-clean-air-programme/articleshow/123814157.cms" target="_blank">
-            Guntur secures sixth place in Swachh Vayu Survekshan under National Clean Air Programme
-          </a>
-          <p>Guntur city has achieved a significant milestone by securing sixth place in the Swachh Vayu Survekshan under the National Clean Air Programme, becoming the only city in South India to earn this distinction.</p>
-        </div>
-      </div>
-    </div>
+    <!-- Latest Traffic News -->
+    <section class="card" aria-label="Latest Traffic News">
+      <h2><i class="fas fa-newspaper"></i> Latest Traffic News</h2>
+      <article class="news-item" tabindex="0">
+        <a href="https://timesofindia.indiatimes.com/city/hyderabad/justice-sapre-reviews-road-safety-in-telangana-urges-collective-action/articleshow/123815779.cms" target="_blank" rel="noopener noreferrer">
+          Justice Sapre Reviews Road Safety in Telangana, Urges Collective Action
+        </a>
+        <p>
+          Justice Abhay Manohar Sapre led a state-level review meeting in Telangana, emphasizing coordinated efforts for road safety leadership.
+        </p>
+      </article>
+      <article class="news-item" tabindex="0">
+        <a href="https://timesofindia.indiatimes.com/city/vijayawada/guntur-secures-sixth-place-in-swachh-vayu-survekshan-under-national-clean-air-programme/articleshow/123814157.cms" target="_blank" rel="noopener noreferrer">
+          Guntur Ranks 6th in Swachh Vayu Survekshan under National Clean Air Programme
+        </a>
+        <p>
+          Guntur is the only city in South India securing a top-10 spot in air quality and cleanliness.
+        </p>
+      </article>
+    </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Traffic Dashboard. All rights reserved.</p>
+    &copy; 2025 Smart Traffic Dashboard. All rights reserved.
   </footer>
-
 </body>
 </html>
