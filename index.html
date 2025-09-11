@@ -189,6 +189,31 @@
       transform: scale(1.2);
       cursor: pointer;
     }
+    /* Latest news styling */
+    #latestNews ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    #latestNews ul li {
+      margin-bottom: 12px;
+      font-size: 1rem;
+      color: var(--primary);
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+    }
+    #latestNews ul li a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #latestNews ul li a:hover {
+      text-decoration: underline;
+    }
+    #latestNews ul li .date {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-left: 8px;
+    }
     /* Responsive */
     @media (max-width: 768px) {
       main {
@@ -305,12 +330,6 @@
     </a>
   </section>
 
-  <!-- Traffic Violation Trends Graph -->
-  <section>
-    <h2>Traffic Violation Trends</h2>
-    <canvas id="trafficChart" width="100%" height="40"></canvas>
-  </section>
-
   <!-- Traffic Mistakes & Feedback -->
   <section>
     <h2>Common Traffic Mistakes & Your Feedback</h2>
@@ -349,6 +368,35 @@
     <div id="feedbackResponse" style="margin-top: 15px; font-weight: 600;"></div>
   </section>
 
+  <!-- Latest Traffic News -->
+  <section id="latestNews">
+    <h2>Latest Traffic News</h2>
+    <ul>
+      <li>
+        <a href="https://example.com/news1" target="_blank" rel="noopener noreferrer">New traffic rules implemented in Maharashtra</a>
+        <span class="date">- Sep 10, 2025</span>
+      </li>
+      <li>
+        <a href="https://example.com/news2" target="_blank" rel="noopener noreferrer">Delhi plans to increase traffic fines by 20%</a>
+        <span class="date">- Sep 9, 2025</span>
+      </li>
+      <li>
+        <a href="https://example.com/news3" target="_blank" rel="noopener noreferrer">Awareness campaign on helmet safety launched</a>
+        <span class="date">- Sep 8, 2025</span>
+      </li>
+      <li>
+        <a href="https://example.com/news4" target="_blank" rel="noopener noreferrer">Traffic congestion reduces by 15% after new signal timings</a>
+        <span class="date">- Sep 7, 2025</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Traffic Violation Trends Graph -->
+  <section>
+    <h2>Traffic Violation Trends</h2>
+    <canvas id="trafficChart" width="100%" height="40"></canvas>
+  </section>
+
 </main>
 
 <!-- Scripts -->
@@ -358,28 +406,31 @@
     speeding: { icon: '🚗', label: 'Speeding' },
     parking: { icon: '🅿️', label: 'Illegal Parking' },
     signal: { icon: '🚦', label: 'Signal Violation' },
-    document: { icon: '📄', label: 'Document Violation' }
+    helmet: { icon: '🪖', label: 'No Helmet' }
   };
 
-  const challans = [
-    { vehicleNo: "KA-01-HH-1234", owner: "Rajesh Kumar", vehicleDetails: "Car, 2018 Model", challanType: "speeding", amount: 1500 },
-    { vehicleNo: "MH-12-AB-4567", owner: "Sneha Patel", vehicleDetails: "Motorcycle, 2020 Model", challanType: "parking", amount: 500 },
-    { vehicleNo: "DL-04-XY-9876", owner: "Amit Singh", vehicleDetails: "Truck, 2015 Model", challanType: "signal", amount: 1200 },
-    { vehicleNo: "TN-09-ZZ-5555", owner: "Priya Sharma", vehicleDetails: "Car, 2019 Model", challanType: "document", amount: 800 }
+  // Sample challan data
+  let challans = [
+    { vehicleNo: 'MH12AB1234', owner: 'Rahul Sharma', vehicleDetails: 'Honda Activa', challanType: 'speeding', amount: 1500 },
+    { vehicleNo: 'KA05CD6789', owner: 'Sneha Patel', vehicleDetails: 'Toyota Corolla', challanType: 'signal', amount: 1200 },
+    { vehicleNo: 'DL09EF2345', owner: 'Amit Kumar', vehicleDetails: 'Honda City', challanType: 'parking', amount: 800 },
+    { vehicleNo: 'MH14GH7890', owner: 'Neha Singh', vehicleDetails: 'Bajaj Pulsar', challanType: 'helmet', amount: 500 }
   ];
 
   const tbody = document.getElementById('challanTableBody');
-  const messageDiv = document.getElementById('message');
   const searchBar = document.getElementById('searchBar');
+  const messageDiv = document.getElementById('message');
 
   function renderTable(filter = '') {
-    const f = filter.toLowerCase();
     tbody.innerHTML = '';
+    const f = filter.toLowerCase().trim();
+
     const filtered = challans.filter(c =>
       c.vehicleNo.toLowerCase().includes(f) ||
       c.owner.toLowerCase().includes(f) ||
       challanTypes[c.challanType].label.toLowerCase().includes(f)
     );
+
     filtered.forEach((c, i) => {
       const tr = document.createElement('tr');
 
