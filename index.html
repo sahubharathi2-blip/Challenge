@@ -1,574 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Traffic Challan Dashboard</title>
+<meta charset="UTF-8">
+<title>Bharathi | Graphic Design Portfolio</title>
 
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-    :root {
-      --primary: #1f2937;
-      --secondary: #3b82f6;
-      --accent: #f97316;
-      --success: #22c55e;
-      --danger: #ef4444;
-      --background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
-      --white: #ffffff;
-      --gray-light: #f3f4f6;
-      --shadow: rgba(0, 0, 0, 0.15);
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0; padding: 0;
-      font-family: 'Roboto', sans-serif;
-    }
-    body {
-      min-height: 100vh;
-      background: var(--background);
-      color: var(--white);
-      padding-top: 80px;
-    }
-    nav {
-      background-color: #111827;
-      padding: 1rem 2rem;
-      color: var(--white);
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px var(--shadow);
-    }
-    nav .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--secondary);
-    }
-    nav .menu {
-      display: flex;
-      gap: 20px;
-    }
-    nav .menu a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    nav .menu a:hover {
-      color: var(--accent);
-    }
-    header {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-top: 1rem;
-    }
-    main {
-      max-width: 1000px;
-      margin: 0 auto 40px;
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 15px 30px var(--shadow);
-      padding: 2rem;
-      color: var(--primary);
-    }
-    #searchBar {
-      width: 100%;
-      padding: 12px 18px;
-      font-size: 1rem;
-      border-radius: 12px;
-      border: 2px solid var(--secondary);
-      margin-bottom: 1.8rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 15px;
-      min-width: 800px;
-    }
-    thead tr {
-      background-color: var(--secondary);
-      color: var(--white);
-    }
-    thead th {
-      padding: 15px 10px;
-      text-align: left;
-      white-space: nowrap;
-    }
-    tbody tr {
-      background: var(--gray-light);
-      border-radius: 12px;
-    }
-    tbody td {
-      padding: 15px 10px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    .amount {
-      font-weight: 700;
-      color: var(--danger);
-    }
-    .pay-btn {
-      background-color: var(--accent);
-      color: var(--white);
-      border: none;
-      padding: 10px 18px;
-      font-weight: 700;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.25s ease;
-    }
-    .pay-btn:hover {
-      background-color: #c2410c;
-    }
-    .pay-btn:disabled {
-      background-color: #d1d5db;
-      color: #6b7280;
-      cursor: not-allowed;
-    }
-    #message {
-      margin-top: 1.5rem;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--success);
-      text-align: center;
-      display: none;
-    }
-    canvas {
-      margin: 30px auto;
-      display: block;
-      max-width: 500px;
-    }
-    section {
-      margin-top: 50px;
-    }
-    section h2 {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      color: var(--primary);
-    }
-    section ul {
-      padding-left: 20px;
-      line-height: 1.6;
-    }
-    section ul li {
-      color: #374151;
-      font-size: 1rem;
-      margin-bottom: 6px;
-    }
-    section a.map-link {
-      background-color: #3b82f6;
-      color: white;
-      padding: 12px 24px;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      display: inline-block;
-      margin-top: 10px;
-    }
-    /* Additional styles for feedback section */
-    #mistakesList li {
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: var(--primary);
-    }
-    #mistakesList input[type="checkbox"] {
-      margin-right: 8px;
-      transform: scale(1.2);
-      cursor: pointer;
-    }
-    /* Latest news styling */
-    #latestNews ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-    #latestNews ul li {
-      margin-bottom: 12px;
-      font-size: 1rem;
-      color: var(--primary);
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 6px;
-    }
-    #latestNews ul li a {
-      color: #2563eb;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    #latestNews ul li a:hover {
-      text-decoration: underline;
-    }
-    #latestNews ul li .date {
-      font-size: 0.85rem;
-      color: #6b7280;
-      margin-left: 8px;
-    }
-    /* Responsive */
-    @media (max-width: 768px) {
-      main {
-        padding: 1rem;
-      }
-      table {
-        min-width: unset;
-        font-size: 0.9rem;
-      }
-      nav .menu {
-        gap: 10px;
-      }
-      nav .menu a {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+body{
+    display:flex;
+    background:#f2f2f2;
+}
+
+/* ===== Sidebar ===== */
+.sidebar{
+    width:270px;
+    background:#0f0f0f;
+    color:#fff;
+    padding:25px;
+    position:fixed;
+    height:100vh;
+}
+
+.sidebar h1{
+    font-size:26px;
+    letter-spacing:1px;
+}
+
+.sidebar span{
+    color:gold;
+}
+
+.sidebar p{
+    font-size:14px;
+    margin-top:8px;
+    color:#ccc;
+}
+
+.sidebar h3{
+    margin-top:25px;
+    margin-bottom:10px;
+    font-size:16px;
+    color:gold;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar ul li{
+    font-size:14px;
+    margin-bottom:6px;
+}
+
+.colors{
+    margin-top:10px;
+}
+
+.colors div{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:8px;
+}
+
+.black{background:black;}
+.gold{background:gold;}
+.white{background:white;border:1px solid #ccc;}
+.red{background:red;}
+
+.color-info{
+    font-size:13px;
+    margin-top:10px;
+    line-height:1.6;
+    color:#ddd;
+}
+
+/* ===== Main Content ===== */
+.main{
+    margin-left:270px;
+    padding:30px;
+    width:100%;
+}
+
+header h2{
+    font-size:32px;
+}
+
+header p{
+    color:#666;
+    margin-top:5px;
+    margin-bottom:30px;
+}
+
+/* ===== Portfolio Grid ===== */
+.portfolio{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:20px;
+}
+
+.card{
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+
+.card h4{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.card p{
+    font-size:14px;
+    color:#555;
+}
+
+/* ===== Footer ===== */
+footer{
+    text-align:center;
+    margin-top:40px;
+    color:#777;
+    font-size:14px;
+}
+</style>
 </head>
+
 <body>
 
-<!-- Navbar -->
-<nav>
-  <div class="logo">
-    <i class="fas fa-car-crash"></i> TrafficChallan
-  </div>
-  <div class="menu">
-    <a href="#"><i class="fas fa-home"></i> Home</a>
-    <a href="#"><i class="fas fa-car"></i> Vehicles</a>
-    <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
-    <a href="#"><i class="fas fa-info-circle"></i> Help</a>
-  </div>
-</nav>
+<!-- ===== Sidebar ===== -->
+<div class="sidebar">
+    <h1>Bharathi <span>Designs</span></h1>
+    <p>Graphic Designer | Branding & Print</p>
 
-<!-- Header -->
+    <h3>Design Expertise</h3>
+    <ul>
+        <li>Fashion Logo Design</li>
+        <li>Brand Identity</li>
+        <li>Print Media</li>
+        <li>Marketing Creatives</li>
+        <li>Packaging Design</li>
+    </ul>
+
+    <h3>Color Palette</h3>
+    <div class="colors">
+        <div class="black"></div>
+        <div class="gold"></div>
+        <div class="white"></div>
+        <div class="red"></div>
+    </div>
+
+    <div class="color-info">
+        Black – Premium & Bold<br>
+        Gold – Luxury & Fashion<br>
+        White – Clean & Modern<br>
+        Red – Attraction & Power
+    </div>
+</div>
+
+<!-- ===== Main Content ===== -->
+<div class="main">
+
 <header>
-  <h1><i class="fas fa-money-check-alt"></i> Pay Your Challans</h1>
+    <h2>Graphic Design Portfolio</h2>
+    <p>Creative visual solutions for brands & businesses</p>
 </header>
 
-<!-- Main -->
-<main>
+<section class="portfolio">
 
-  <!-- Search Bar -->
-  <input type="text" id="searchBar" placeholder="Search by Vehicle No., Owner Name or Challan Type..." />
+    <div class="card">
+        <img src="images/logo.jpg" alt="Logo Design">
+        <h4>Fashion Logo</h4>
+        <p>Luxury logo design for fashion branding.</p>
+    </div>
 
-  <!-- Challan Table -->
-  <table>
-    <thead>
-      <tr>
-        <th>Vehicle No.</th>
-        <th>Owner Name</th>
-        <th>Vehicle Details</th>
-        <th>Challan Type</th>
-        <th>Amount</th>
-        <th>Pay</th>
-      </tr>
-    </thead>
-    <tbody id="challanTableBody"></tbody>
-  </table>
+    <div class="card">
+        <img src="images/visiting-card.jpg" alt="Visiting Card">
+        <h4>Visiting Card</h4>
+        <p>Front & back professional card design.</p>
+    </div>
 
-  <div id="message"><i class="fas fa-check-circle"></i> Payment Successful! Thank you.</div>
+    <div class="card">
+        <img src="images/pamphlet.jpg" alt="Pamphlet">
+        <h4>Pamphlet Design</h4>
+        <p>Promotional pamphlets for marketing.</p>
+    </div>
 
-  <!-- Traffic Rules -->
-  <section>
-    <h2>Traffic Rules to Follow</h2>
-    <ul>
-      <li>Always wear a helmet while riding a two-wheeler.</li>
-      <li>Do not drink and drive.</li>
-      <li>Follow speed limits and road signs.</li>
-      <li>Always carry your driving license and vehicle documents.</li>
-      <li>Obey traffic signals and lane discipline.</li>
-    </ul>
-  </section>
+    <div class="card">
+        <img src="images/poster.jpg" alt="Poster">
+        <h4>Poster</h4>
+        <p>Attractive poster for brand promotion.</p>
+    </div>
 
-  <!-- State-wise Challans -->
-  <section>
-    <h2>State-wise Recent Challans</h2>
-    <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;">
-      <thead style="background: #3b82f6; color: white;">
-        <tr>
-          <th style="padding: 10px;">State</th>
-          <th style="padding: 10px;">Challan Type</th>
-          <th style="padding: 10px;">Date</th>
-          <th style="padding: 10px;">Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding: 10px;">Maharashtra</td>
-          <td style="padding: 10px;">Speeding</td>
-          <td style="padding: 10px;">2025-09-10</td>
-          <td style="padding: 10px;">₹1500</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px;">Karnataka</td>
-          <td style="padding: 10px;">Signal Violation</td>
-          <td style="padding: 10px;">2025-09-09</td>
-          <td style="padding: 10px;">₹1200</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px;">Delhi</td>
-          <td style="padding: 10px;">Illegal Parking</td>
-          <td style="padding: 10px;">2025-09-08</td>
-          <td style="padding: 10px;">₹800</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+    <div class="card">
+        <img src="images/brochure.jpg" alt="Brochure">
+        <h4>Brochure</h4>
+        <p>Multi-page brochure layout design.</p>
+    </div>
 
-  <!-- Maps Integration -->
-  <section style="text-align: center;">
-    <h2>Check Live Traffic Near You</h2>
-    <a class="map-link" href="https://www.google.com/maps/@?api=1&map_action=map&layer=traffic" target="_blank" rel="noopener noreferrer">
-      Open in Google Maps
-    </a>
-  </section>
+    <div class="card">
+        <img src="images/magazine.jpg" alt="Magazine">
+        <h4>Magazine Layout</h4>
+        <p>Front, back & inner pages design.</p>
+    </div>
 
-  <!-- Traffic Mistakes & Feedback -->
-  <section>
-    <h2>Common Traffic Mistakes & Your Feedback</h2>
-    <p>Please select the traffic mistakes you often notice on the roads. Your feedback helps improve awareness and enforcement.</p>
-    
-    <ul id="mistakesList" style="list-style: none; padding-left: 0;">
-      <li>
-        <label>
-          <input type="checkbox" value="Speeding" /> Speeding
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" value="Signal Jumping" /> Jumping Red Signals
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" value="No Helmet" /> Not Wearing Helmet
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" value="Wrong Parking" /> Illegal Parking
-        </label>
-      </li>
-      <li>
-        <label>
-          <input type="checkbox" value="Distracted Driving" /> Using Mobile While Driving
-        </label>
-      </li>
-    </ul>
-    
-    <button id="submitFeedback" class="pay-btn" style="margin-top: 10px;">Submit Feedback</button>
-    
-    <div id="feedbackResponse" style="margin-top: 15px; font-weight: 600;"></div>
-  </section>
+    <div class="card">
+        <img src="images/id-card.jpg" alt="ID Card">
+        <h4>ID Card</h4>
+        <p>Corporate identity card design.</p>
+    </div>
 
-  <!-- Latest Traffic News -->
-  <section id="latestNews">
-    <h2>Latest Traffic News</h2>
-    <ul>
-      <li>
-        <a href="https://example.com/news1" target="_blank" rel="noopener noreferrer">New traffic rules implemented in Maharashtra</a>
-        <span class="date">- Sep 10, 2025</span>
-      </li>
-      <li>
-        <a href="https://example.com/news2" target="_blank" rel="noopener noreferrer">Delhi plans to increase traffic fines by 20%</a>
-        <span class="date">- Sep 9, 2025</span>
-      </li>
-      <li>
-        <a href="https://example.com/news3" target="_blank" rel="noopener noreferrer">Awareness campaign on helmet safety launched</a>
-        <span class="date">- Sep 8, 2025</span>
-      </li>
-      <li>
-        <a href="https://example.com/news4" target="_blank" rel="noopener noreferrer">Traffic congestion reduces by 15% after new signal timings</a>
-        <span class="date">- Sep 7, 2025</span>
-      </li>
-    </ul>
-  </section>
+    <div class="card">
+        <img src="images/box.jpg" alt="Box Design">
+        <h4>Box & Packaging</h4>
+        <p>Creative box & packaging design.</p>
+    </div>
 
-  <!-- Traffic Violation Trends Graph -->
-  <section>
-    <h2>Traffic Violation Trends</h2>
-    <canvas id="trafficChart" width="100%" height="40"></canvas>
-  </section>
+</section>
 
-</main>
+<footer>
+    © 2025 Bharathi | Graphic Designer Portfolio
+</footer>
 
-<!-- Scripts -->
-<script>
-  // Challan Types
-  const challanTypes = {
-    speeding: { icon: '🚗', label: 'Speeding' },
-    parking: { icon: '🅿️', label: 'Illegal Parking' },
-    signal: { icon: '🚦', label: 'Signal Violation' },
-    helmet: { icon: '🪖', label: 'No Helmet' }
-  };
-
-  // Sample challan data
-  let challans = [
-    { vehicleNo: 'MH12AB1234', owner: 'Rahul Sharma', vehicleDetails: 'Honda Activa', challanType: 'speeding', amount: 1500 },
-    { vehicleNo: 'KA05CD6789', owner: 'Sneha Patel', vehicleDetails: 'Toyota Corolla', challanType: 'signal', amount: 1200 },
-    { vehicleNo: 'DL09EF2345', owner: 'Amit Kumar', vehicleDetails: 'Honda City', challanType: 'parking', amount: 800 },
-    { vehicleNo: 'MH14GH7890', owner: 'Neha Singh', vehicleDetails: 'Bajaj Pulsar', challanType: 'helmet', amount: 500 }
-  ];
-
-  const tbody = document.getElementById('challanTableBody');
-  const searchBar = document.getElementById('searchBar');
-  const messageDiv = document.getElementById('message');
-
-  function renderTable(filter = '') {
-    tbody.innerHTML = '';
-    const f = filter.toLowerCase().trim();
-
-    const filtered = challans.filter(c =>
-      c.vehicleNo.toLowerCase().includes(f) ||
-      c.owner.toLowerCase().includes(f) ||
-      challanTypes[c.challanType].label.toLowerCase().includes(f)
-    );
-
-    filtered.forEach((c, i) => {
-      const tr = document.createElement('tr');
-
-      const tdVehicle = document.createElement('td');
-      tdVehicle.textContent = c.vehicleNo;
-      tr.appendChild(tdVehicle);
-
-      const tdOwner = document.createElement('td');
-      tdOwner.textContent = c.owner;
-      tr.appendChild(tdOwner);
-
-      const tdVehicleDetails = document.createElement('td');
-      tdVehicleDetails.textContent = c.vehicleDetails;
-      tr.appendChild(tdVehicleDetails);
-
-      const tdChallanType = document.createElement('td');
-      tdChallanType.textContent = `${challanTypes[c.challanType].icon} ${challanTypes[c.challanType].label}`;
-      tr.appendChild(tdChallanType);
-
-      const tdAmount = document.createElement('td');
-      tdAmount.className = 'amount';
-      tdAmount.textContent = `₹${c.amount}`;
-      tr.appendChild(tdAmount);
-
-      const tdPay = document.createElement('td');
-      const payBtn = document.createElement('button');
-      payBtn.className = 'pay-btn';
-      payBtn.textContent = 'Pay Now';
-      payBtn.addEventListener('click', () => payChallan(i));
-      tdPay.appendChild(payBtn);
-      tr.appendChild(tdPay);
-
-      tbody.appendChild(tr);
-    });
-
-    if (filtered.length === 0) {
-      const tr = document.createElement('tr');
-      const td = document.createElement('td');
-      td.colSpan = 6;
-      td.style.textAlign = 'center';
-      td.style.color = '#6b7280';
-      td.style.fontWeight = '600';
-      td.textContent = 'No challans found.';
-      tr.appendChild(td);
-      tbody.appendChild(tr);
-    }
-  }
-
-  function payChallan(index) {
-    const payBtn = tbody.children[index].querySelector('.pay-btn');
-    payBtn.disabled = true;
-    payBtn.textContent = 'Processing...';
-
-    setTimeout(() => {
-      challans.splice(index, 1);
-      renderTable(searchBar.value);
-      messageDiv.style.display = 'block';
-      setTimeout(() => {
-        messageDiv.style.display = 'none';
-      }, 3500);
-    }, 1200);
-  }
-
-  searchBar.addEventListener('input', () => {
-    renderTable(searchBar.value);
-  });
-
-  renderTable();
-
-  // Chart.js traffic violation data
-  const ctx = document.getElementById('trafficChart').getContext('2d');
-  const trafficChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Speeding', 'Signal Jumping', 'No Helmet', 'Wrong Parking', 'Distracted Driving'],
-      datasets: [{
-        label: 'Number of Violations',
-        data: [120, 95, 80, 70, 60], // Example data
-        backgroundColor: [
-          '#ef4444', // red
-          '#f97316', // orange
-          '#3b82f6', // blue
-          '#10b981', // green
-          '#8b5cf6'  // purple
-        ]
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: { enabled: true }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: { display: true, text: 'Violations Count' }
-        },
-        x: {
-          title: { display: true, text: 'Violation Type' }
-        }
-      }
-    }
-  });
-
-  // Feedback handling
-  const submitBtn = document.getElementById('submitFeedback');
-  const feedbackResponse = document.getElementById('feedbackResponse');
-  const mistakesList = document.getElementById('mistakesList');
-
-  submitBtn.addEventListener('click', () => {
-    const checked = Array.from(mistakesList.querySelectorAll('input[type="checkbox"]:checked'))
-      .map(input => input.value);
-
-    if (checked.length === 0) {
-      feedbackResponse.style.color = '#ef4444';
-      feedbackResponse.textContent = 'Please select at least one traffic mistake.';
-      return;
-    }
-
-    const suggestions = {
-      "Speeding": "Please adhere to speed limits to avoid accidents and fines.",
-      "Signal Jumping": "Obey traffic signals to ensure safety for everyone.",
-      "No Helmet": "Wearing a helmet saves lives — always wear one.",
-      "Wrong Parking": "Park only in designated areas to avoid penalties.",
-      "Distracted Driving": "Avoid using your phone while driving; stay focused."
-    };
-
-    let responseText = 'Thank you for your feedback! Here are some suggestions:<br><br>';
-
-    checked.forEach(item => {
-      responseText += `• ${suggestions[item]}<br>`;
-    });
-
-    feedbackResponse.style.color = '#059669'; // green
-    feedbackResponse.innerHTML = responseText;
-  });
-</script>
+</div>
 
 </body>
 </html>
